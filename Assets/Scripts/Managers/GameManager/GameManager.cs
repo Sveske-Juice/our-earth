@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // If it succesfully translated the scene name to it's corresponding game state, then switch to that state
+        // If it succesfully translated the scene name to it's corresponding game state behaviour, then switch to that state
         SwitchState(newState);
     }
 
