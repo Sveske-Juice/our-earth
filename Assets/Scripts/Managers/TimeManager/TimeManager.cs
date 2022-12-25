@@ -8,11 +8,11 @@ public class TimeManager : MonoBehaviour
     private TimeManager m_Instance;
     private TimeData m_TimeData;
 
-    [SerializeField]
+    [SerializeField, Tooltip("How many seconds that should pass before a new year starts")]
     private double m_SecondsInYear;
 
     [SerializeField, Tooltip("The year the game will start in")]
-    private int m_StartYear = 2022;
+    private int m_StartYear = DateTime.Now.Year + 1; // The start year will be the next year from now
     private int m_Year;
     public static event Action<int> OnYearChange;
 

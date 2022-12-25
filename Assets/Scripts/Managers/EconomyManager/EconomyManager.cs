@@ -43,7 +43,7 @@ public class EconomyManager : MonoBehaviour
 
     private void OnNewYear(int year)
     {
-        // Add the yearly income to the players balance
+        // Add the yearly income to the player's balance
         m_EconomyData.balance += m_EconomyData.yearlyIncome;
 
         // Raise balance change event with the new balance
