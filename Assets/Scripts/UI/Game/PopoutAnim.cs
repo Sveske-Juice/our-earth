@@ -22,14 +22,14 @@ public class PopoutAnim : MonoBehaviour
 
     //Onto screen
     public void PopOut() {
-        LeanTween.moveX(this.gameObject, outPos, 0.3f);
+        LeanTween.moveX(this.gameObject, outPos, 0.2f);
         isOut = true;
     }
 
     //Off screen
     public void PopBack()
     {
-        LeanTween.moveX(this.gameObject, backPos, 0.3f);
+        LeanTween.moveX(this.gameObject, backPos, 0.2f);
         isOut = false;
     }
 }
