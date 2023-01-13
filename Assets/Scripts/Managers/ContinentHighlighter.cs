@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class ContinentHighlighter : MonoBehaviour
 {
     private Camera m_MainCamera;
-
+    private GameObject m_SelectedContinent;
     private Vector2 m_LastClickPosition;
 
     private void Awake()
@@ -23,7 +23,6 @@ public class ContinentHighlighter : MonoBehaviour
 
     private void OnScreenClick(InputAction.CallbackContext ctx)
     {
-        print("Screen clicked");
         HighlightContinent(m_LastClickPosition);
     }
 
@@ -37,10 +36,21 @@ public class ContinentHighlighter : MonoBehaviour
     {
         // Check to see if a continent was clicked on
         Ray ray = m_MainCamera.ScreenPointToRay(clickPosition);
+        
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.blue, 5f);
+
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, Mathf.Infinity))
             return;
         
+        if (hit.transform.tag != "Continent")
+            return;
+
+        // Highlight the clicked continent
+        m_SelectedContinent = hit.transform.gameObject;
+
         
+
+        Debug.Log($"hit {hit.transform.name}");
     }
 }
