@@ -5,22 +5,20 @@ using UnityEngine.InputSystem;
 
 public class ContinentHighlighter : MonoBehaviour
 {
-    private Controls m_Controls;
     private Camera m_MainCamera;
 
     private Vector2 m_LastClickPosition;
 
     private void Awake()
     {
-        m_Controls = new Controls();
         m_MainCamera = Camera.main;
     }
 
     private void OnEnable()
     {
-        m_Controls.Navigation.Enable();
-        m_Controls.Navigation.ScreenClick.performed += OnScreenClick;
-        m_Controls.Navigation.OnMove.performed += UpdateClickPosition;
+        InputManager.PlayerControls.Navigation.Enable();
+        InputManager.PlayerControls.Navigation.ScreenClick.performed += OnScreenClick;
+        InputManager.PlayerControls.Navigation.OnMove.performed += UpdateClickPosition;
     }
 
     private void OnScreenClick(InputAction.CallbackContext ctx)
