@@ -36,8 +36,13 @@ public class PollutionManager : MonoBehaviour
     /// </summary>
     private void UpdateEmission()
     {
+        m_EmissionPrSecond = 0;
         // TODO should loop through every pollution influencer and sum their influnce and store it in m_EmissionPrSecond
-        
+        for(int i = 0; i < m_PollutionInfluencers.Count; i++)
+        {
+            m_EmissionPrSecond += m_PollutionInfluencers[i].GetEmissionInfluence();
+        }
+
     }
 
     private void LoadData()
