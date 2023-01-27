@@ -35,10 +35,7 @@ public class EconomyManager : MonoBehaviour
 
     private void Start()
     {
-        // TODO Load progress data from disk
-
-        // If there's no progress data then just load defaults
-        m_EconomyData = new EconomyData();
+        LoadData();
     }
 
     private void OnNewYear(int year)
@@ -46,10 +43,18 @@ public class EconomyManager : MonoBehaviour
         // Add the yearly income to the player's balance
         m_EconomyData.balance += m_EconomyData.yearlyIncome;
 
-        // Raise balance change event with the new balance
+        // Raise on balance change event with the new balance
         OnBalanceChange?.Invoke(m_EconomyData.balance);
 
         // Debug.Log($"Balance: {m_EconomyData.balance}");
+    }
+
+    private void LoadData()
+    {
+        // TODO Load progress data from disk
+
+        // If there's no progress data then just load defaults
+        m_EconomyData = new EconomyData();
     }
 }
 
@@ -65,6 +70,6 @@ serialized (saved to disk), and unserialized (loaded from disk)
 [Serializable]
 public class EconomyData
 {
-    public double balance = 0;
-    public double yearlyIncome = 1500;
+    public double balance = 6969d;
+    public double yearlyIncome = 69690d;
 }
