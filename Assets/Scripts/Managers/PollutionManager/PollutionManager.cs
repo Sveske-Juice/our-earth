@@ -8,8 +8,10 @@ public class PollutionManager : MonoBehaviour
     private PollutionManager m_Instance;
     private PollutionData m_PollutionData;
 
-    private List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
-    public void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); }
+    private static List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
+    public static void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); }
+    public static void UnregisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Remove(influencer); }
+    
     private double m_EmissionPrSecond = 0d;
 
     private void Awake()

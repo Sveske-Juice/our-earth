@@ -13,5 +13,5 @@ public interface IBudgetInfluencer
     /// which will be summed from all other classes implementing
     /// this interface and give the player's total yearly budget/income.
     /// </summary>
-    double GetYearlyInfluence();
+    double GetYearlyBudgetInfluence();
 }

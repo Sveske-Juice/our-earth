@@ -8,6 +8,15 @@ public class EconomyManager : MonoBehaviour
     private EconomyManager m_Instance;
     private EconomyData m_EconomyData;
 
+    [SerializeField, Tooltip("Amount of yearly income the game starts at")]
+    private double m_BaseYearlyIncome = 100000000000000; // 1 Trillion
+
+    private double m_YearlyIncome;
+
+    private static List<IBudgetInfluencer> m_BudgetInfluencers = new List<IBudgetInfluencer>();
+    public static void RegisterBudgetInfluncer(IBudgetInfluencer influencer) { m_BudgetInfluencers.Add(influencer); }
+    public static void UnregisterBudgetInfluncer(IBudgetInfluencer influencer) { m_BudgetInfluencers.Remove(influencer); }
+
     public static event Action<double> OnBalanceChange;
 
     private void Awake()
@@ -26,22 +35,45 @@ public class EconomyManager : MonoBehaviour
     private void OnEnable()
     {
         TimeManager.OnYearChange += OnNewYear;
+        ContinentUpgradeSystem.OnContinentUpgraded += OnContinentUpgraded; // Update total yearly budget when new upgrade is performed
     }
 
     private void OnDisable()
     {
         TimeManager.OnYearChange -= OnNewYear;
+        ContinentUpgradeSystem.OnContinentUpgraded -= OnContinentUpgraded;
+    }
+
+    private void OnContinentUpgraded(Upgrade upgrade, GameObject continent) => UpdateTotalYearlyBudget();
+
+    /// <summary>
+    /// Updates the yearly budget based on the budget influencers.
+    /// </summary>
+    private void UpdateTotalYearlyBudget()
+    {
+        m_YearlyIncome = m_BaseYearlyIncome;
+
+        for (int i = 0; i < m_BudgetInfluencers.Count; i++)
+        {
+            m_YearlyIncome += m_BudgetInfluencers[i].GetYearlyBudgetInfluence();
+        }
+        Debug.Log($"Updated total yearly income. Budget is now {m_YearlyIncome}");
     }
 
     private void Start()
     {
         LoadData();
+
+        // Update the yearly budget when initializing
+        UpdateTotalYearlyBudget();
     }
+
+    //void Update() => UpdateTotalYearlyBudget();
 
     private void OnNewYear(int year)
     {
         // Add the yearly income to the player's balance
-        m_EconomyData.balance += m_EconomyData.yearlyIncome;
+        m_EconomyData.balance += m_YearlyIncome;
 
         // Raise on balance change event with the new balance
         OnBalanceChange?.Invoke(m_EconomyData.balance);
@@ -71,5 +103,4 @@ serialized (saved to disk), and unserialized (loaded from disk)
 public class EconomyData
 {
     public double balance = 6969d;
-    public double yearlyIncome = 69690d;
 }
