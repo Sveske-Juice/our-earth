@@ -293,7 +293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.5, y: -26.1}
+  m_AnchoredPosition: {x: 17.5, y: -26.100006}
   m_SizeDelta: {x: -35, y: -187.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &193646366
@@ -460,7 +460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 140}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 375, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &388651831
@@ -889,7 +889,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.5, y: -63.4}
+  m_AnchoredPosition: {x: 17.5, y: -63.399994}
   m_SizeDelta: {x: -35, y: -232}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708004220
@@ -1024,7 +1024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 180}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &814532581
@@ -1715,7 +1715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 50}
+  m_AnchoredPosition: {x: -125, y: 75}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1225158482
@@ -2208,8 +2208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6a4b7650d81d30e8f6a4497904a6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinTimeForCatastrophe: 10
-  m_MaxTimeForCatastrophe: 15
+  m_MinTimeForCatastrophe: 30
+  m_MaxTimeForCatastrophe: 60
 --- !u!4 &1967797476
 Transform:
   m_ObjectHideFlags: 0
@@ -2280,6 +2280,8 @@ MonoBehaviour:
   m_CatastropheTextContext: ^ is approaching!
   m_MiddleScreenTime: 2.5
   m_CornerScreenTime: 5
+  m_MiddlePosition: {fileID: 2039030702}
+  m_CornerPosition: {fileID: 1216823075}
 --- !u!1 &2039030701
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,5 +6,6 @@ public enum Catastrophe
 {
     Tsunami,
     Tornado,
-    Earthquake
+    Earthquake,
+    ForestFire,
 }
