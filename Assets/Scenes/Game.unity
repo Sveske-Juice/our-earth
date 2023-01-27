@@ -1937,6 +1937,7 @@ GameObject:
   - component: {fileID: 1905024449}
   - component: {fileID: 1905024451}
   - component: {fileID: 1905024450}
+  - component: {fileID: 1905024452}
   m_Layer: 5
   m_Name: Overview Stats
   m_TagString: Untagged
@@ -2003,6 +2004,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905024448}
   m_CullTransparentMesh: 1
+--- !u!114 &1905024452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905024448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd28be8b15334f70b9cfead97c1732d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BalanceTextElement: {fileID: 1346457250}
 --- !u!1 &1912953246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,4 +2163,4 @@ MonoBehaviour:
   m_CatastropheText: {fileID: 388651831}
   m_CatastropheTextContext: ^ is approaching!
   m_MiddleScreenTime: 2.5
-  m_CornerScreenTime: 2.5
+  m_CornerScreenTime: 5
