@@ -11,6 +11,7 @@ public class CatastropheManager : MonoBehaviour
 
     /// <summary> Event that gets raised when a catastrophe starts. </summary>
     public static event Action<string> OnCatastropheStart;
+    private static System.Random m_Random = new System.Random();
 
     private void Start()
     {
@@ -19,8 +20,14 @@ public class CatastropheManager : MonoBehaviour
 
     private void ChooseNextCatastrophe()
     {
+        // Get random time for the catastrophe to happen
         float timeForCatastrophe = UnityEngine.Random.Range(m_MinTimeForCatastrophe, m_MaxTimeForCatastrophe);
 
+        // Get random catastrophe that will happen
+        Catastrophe randomCatastrophe = RandomEnumValue<Catastrophe>();
+
+        // Start countdown of the catastrophe
+        StartCoroutine(StartCountdownForCatastrophe(timeForCatastrophe, randomCatastrophe));
     }
 
     private IEnumerator StartCountdownForCatastrophe(float delay, Catastrophe catastropheType)
@@ -35,5 +42,13 @@ public class CatastropheManager : MonoBehaviour
     private void PerformCatastrophe(Catastrophe catastropheType)
     {
         OnCatastropheStart?.Invoke(catastropheType.ToString());
+
+        // When catastrophe has been performed a new one should be chosed
+        ChooseNextCatastrophe();
+    }
+    static T RandomEnumValue<T> ()
+    {
+        var v = Enum.GetValues (typeof (T));
+        return (T) v.GetValue (m_Random.Next(v.Length));
     }
 }
