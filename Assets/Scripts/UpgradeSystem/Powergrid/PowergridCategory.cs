@@ -11,6 +11,9 @@ public class PowergridCategory : UpgradeCategory
     }
 
     protected override void GenerateUpgrades()
-    {         
+    {
+        m_Upgrades.Add(new RenewableEnergySources());         
+        m_Upgrades.Add(new NuclearEnergySubsidies());         
+        m_Upgrades.Add(new FusionEnergyResearch());         
     }
 }

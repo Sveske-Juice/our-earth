@@ -8,8 +8,22 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected virtual double m_StartBudgetInfluence => 0d;
 
     public abstract string UpgradeName { get; }
-    public virtual double GetYearlyBudgetInfluence() { return 0d; }
-    public virtual double GetEmissionInfluence() { return 0d; }
+
+    /// <summary>
+    /// Calculates the upgrade's yearly influence on the budget. 
+    /// </summary>
+    public virtual double GetYearlyBudgetInfluence()
+    {
+        return m_StartBudgetInfluence * m_UpgradeLevel;
+    }
+
+    /// <summary>
+    /// Calculates the upgrade's emission influence.
+    /// </summary>
+    public virtual double GetEmissionInfluence()
+    {
+        return m_StartEmissionInfluence * m_UpgradeLevel;
+    }
 
     /// <summary>
     /// Will calculate the price needed to get the upgrade from level 1 to m_UpgradeLevel.
@@ -24,12 +38,16 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         }
         return m_CurrentUpgradeLevelPrice;
     }
-    
+
     /// <summary>
     /// Calculates the price for the next upgrade.
     /// </summary>
     public double GetNextUpgradePrice()
     {
+        // If its the first upgrade then show base price
+        if (m_UpgradeLevel == 1)
+            return UpdateLevelPrice();
+        
         return UpdateLevelPrice() * m_UpgradeScaling;
     }
 
@@ -38,7 +56,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     public double GetNextEmissionInfluence()
     {
-        return m_StartEmissionInfluence * m_UpgradeLevel;
+        return GetEmissionInfluence() + m_StartEmissionInfluence;
     }
 
     /// <summary>
@@ -46,6 +64,6 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     public double GetNextBudgetInfluence()
     {
-        return m_StartBudgetInfluence * m_UpgradeLevel;
+        return GetYearlyBudgetInfluence() + m_StartBudgetInfluence;
     }
 }

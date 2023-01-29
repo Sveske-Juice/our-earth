@@ -12,5 +12,7 @@ public class HouseholdsCategory : UpgradeCategory
 
     protected override void GenerateUpgrades()
     {
+        m_Upgrades.Add(new WFHSubsidies());
+        m_Upgrades.Add(new GreenerAppliances());
     }
 }

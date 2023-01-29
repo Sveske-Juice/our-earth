@@ -12,6 +12,8 @@ public class IndustryCategory : UpgradeCategory
 
     protected override void GenerateUpgrades()
     {
+        m_Upgrades.Add(new GreenerConstruction());
+        m_Upgrades.Add(new RecycledMaterials());
     }
 }
 

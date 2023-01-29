@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class TransportCategory : UpgradeCategory
 {
     public override string CategoryName => "Transport";
@@ -13,6 +9,7 @@ public class TransportCategory : UpgradeCategory
     protected override void GenerateUpgrades()
     {
         m_Upgrades.Add(new ElectricCars());
+        m_Upgrades.Add(new WalkableInfrastructure());
     }
 
 }
