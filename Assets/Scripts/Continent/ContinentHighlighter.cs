@@ -20,6 +20,6 @@ public class ContinentHighlighter : MonoBehaviour
     private void HiglightContinent(GameObject continent)
     {
         // TODO implement this
-        Debug.Log($"Highlighting {continent.name}");
+        // Debug.Log($"Highlighting {continent.name}");
     }
 }

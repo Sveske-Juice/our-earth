@@ -20,7 +20,7 @@ public class PopoutAnim : MonoBehaviour
         if (m_IsOut)
             return;
 
-        LeanTween.moveX(this.gameObject, m_OutOfViewPosition.position.x, 0.2f);
+        LeanTween.moveX(this.gameObject, m_InViewPosition.position.x, 0.2f);
         m_IsOut = true;
     }
 
@@ -30,7 +30,7 @@ public class PopoutAnim : MonoBehaviour
         if (!m_IsOut)
             return;
         
-        LeanTween.moveX(this.gameObject, m_InViewPosition.position.x, 0.2f);
+        LeanTween.moveX(this.gameObject, m_OutOfViewPosition.position.x, 0.2f);
         m_IsOut = false;
     }
 }
