@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
 {
+    [Header("Category Display Body")]
     [SerializeField]
     private Transform m_CategoryContent;
 
     [SerializeField]
     private GameObject m_CategoryPrefab;
+
+    [Header("Upgrade Display Body")]
+    [SerializeField]
+    private Transform m_UpgradeContent;
+    
+    [SerializeField]
+    private GameObject m_UpgradePrefab;
 
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
@@ -72,7 +81,16 @@ public class UpgradeMenu : MonoBehaviour
 
     private void CreateMenu(ContinentUpgradeSystem upgradeSystem)
     {
-        /* Create upgrade categories assigned to this upgrade system. */
+        // Create upgrade categories assigned to this upgrade system.
+        CreateCategoriesBody(upgradeSystem);
+    }
+
+    /// <summary>
+    /// Creates the category ui elements which includes all the categories attached
+    /// to a specific <seealso cref="ContinentUpgradeSystem"/>.
+    /// </summary>
+    private void CreateCategoriesBody(ContinentUpgradeSystem upgradeSystem)
+    {
         List<UpgradeCategory> categories = upgradeSystem.UpgradeCategories;
 
         for (int i = 0; i < categories.Count; i++)
@@ -82,15 +100,32 @@ public class UpgradeMenu : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates the upgrades ui elements which includes all the upgrades attached
+    /// to a specific <seealso cref="UpgradeCategory"/>.
+    /// </summary>
+    private void CreateUpgradesBody(UpgradeCategory upgradeCategory)
+    {
+        
+    }
+
     private void CreateCategoryTab(UpgradeCategory category)
     {
         // Create category object
         GameObject categoryTab = Instantiate(m_CategoryPrefab, m_CategoryContent);
+        Button categoryBtn = categoryTab.GetComponent<Button>();
         TextMeshProUGUI categoryText = categoryTab.GetComponentInChildren<TextMeshProUGUI>();
 
         // Populate object with the upgrade category data
+        categoryBtn.onClick.AddListener(() => OnCategoryButtonClick(category)); // Set callback so we know when and what category was clicked
         categoryText.text = category.CategoryName; // Set category name
         // TODO set icon or something
+    }
+
+    private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
+    {
+        Debug.Log($"Clicked category: {categoryClicked.CategoryName}");
+        CreateUpgradesBody(categoryClicked);
     }
 
 }
