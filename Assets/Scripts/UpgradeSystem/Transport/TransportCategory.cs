@@ -12,8 +12,6 @@ public class TransportCategory : UpgradeCategory
 
     protected override void GenerateUpgrades()
     {
-        Debug.Log("Generating transport category");
-        
         m_Upgrades.Add(new ElectricCars());
     }
 

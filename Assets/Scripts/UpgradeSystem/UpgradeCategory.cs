@@ -6,7 +6,7 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
 {
     public abstract string CategoryName { get; }
     protected List<Upgrade> m_Upgrades = new List<Upgrade>();
-
+    public List<Upgrade> Upgrades => m_Upgrades;
     /// <summary>
     /// Generates all the upgrades linked to this upgrade category.
     /// </summary>

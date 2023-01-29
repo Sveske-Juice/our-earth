@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
@@ -72,10 +73,25 @@ public class UpgradeMenu : MonoBehaviour
 
     private void ClearMenu()
     {
-        // Remove all category ui buttons
+        ClearCategories();
+        ClearUpgrades();
+    }
+
+    private void ClearCategories()
+    {
+        // Remove all category ui
         for (int i = 0; i < m_CategoryContent.childCount; i++)
         {
-            Destroy(m_CategoryContent.GetChild(i));
+            Destroy(m_CategoryContent.GetChild(i).gameObject);
+        }
+    }
+
+    private void ClearUpgrades()
+    {
+        // Remove all upgrade ui
+        for (int i = 0; i < m_UpgradeContent.childCount; i++)
+        {
+            Destroy(m_UpgradeContent.GetChild(i).gameObject);
         }
     }
 
@@ -96,7 +112,7 @@ public class UpgradeMenu : MonoBehaviour
         for (int i = 0; i < categories.Count; i++)
         {
             UpgradeCategory category = categories[i];
-            CreateCategoryTab(category);
+            CreateCategoryContainer(category);
         }
     }
 
@@ -106,15 +122,38 @@ public class UpgradeMenu : MonoBehaviour
     /// </summary>
     private void CreateUpgradesBody(UpgradeCategory upgradeCategory)
     {
-        
+        List<Upgrade> upgrades = upgradeCategory.Upgrades;
+
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            Upgrade upgrade = upgrades[i];
+            CreateUpgradeContainer(upgrade);
+        }
     }
 
-    private void CreateCategoryTab(UpgradeCategory category)
+    /// <summary> Will handle creating one container with data about an upgrade in the upgrades scroll view. </summary>
+    private void CreateUpgradeContainer(Upgrade upgrade)
+    {
+        // Create upgrade object
+        GameObject upgradeObj = Instantiate(m_UpgradePrefab, m_UpgradeContent);
+        GameObject upgradeBoxObj = upgradeObj.transform.GetChild(1).gameObject;
+
+        TextMeshProUGUI upgradeTitle = upgradeObj.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI upgradePrice = upgradeBoxObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI emissionImpact = upgradeBoxObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI budgetImpact = upgradeBoxObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        // Populate object with the upgrade data
+        upgradeTitle.text = upgrade.UpgradeName;
+    }
+
+    /// <summary> Will handle creating one container with data about a category in the categories tab scroll view. </summary>
+    private void CreateCategoryContainer(UpgradeCategory category)
     {
         // Create category object
-        GameObject categoryTab = Instantiate(m_CategoryPrefab, m_CategoryContent);
-        Button categoryBtn = categoryTab.GetComponent<Button>();
-        TextMeshProUGUI categoryText = categoryTab.GetComponentInChildren<TextMeshProUGUI>();
+        GameObject categoryObj = Instantiate(m_CategoryPrefab, m_CategoryContent);
+        Button categoryBtn = categoryObj.GetComponent<Button>();
+        TextMeshProUGUI categoryText = categoryObj.GetComponentInChildren<TextMeshProUGUI>();
 
         // Populate object with the upgrade category data
         categoryBtn.onClick.AddListener(() => OnCategoryButtonClick(category)); // Set callback so we know when and what category was clicked
@@ -124,7 +163,9 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
-        Debug.Log($"Clicked category: {categoryClicked.CategoryName}");
+        // Clear upgrades ui from last active category
+        ClearUpgrades();
+        
         CreateUpgradesBody(categoryClicked);
     }
 
