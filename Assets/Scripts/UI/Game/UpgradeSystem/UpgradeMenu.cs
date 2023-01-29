@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
 {
+    [SerializeField]
+    private Transform m_CategoryContent;
+
+    [SerializeField]
+    private GameObject m_CategoryPrefab;
+
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
 
@@ -56,12 +63,34 @@ public class UpgradeMenu : MonoBehaviour
 
     private void ClearMenu()
     {
-        Debug.Log("Clearing Menu...");
+        // Remove all category ui buttons
+        for (int i = 0; i < m_CategoryContent.childCount; i++)
+        {
+            Destroy(m_CategoryContent.GetChild(i));
+        }
     }
 
     private void CreateMenu(ContinentUpgradeSystem upgradeSystem)
     {
-        Debug.Log("Creating menu...");
+        /* Create upgrade categories assigned to this upgrade system. */
+        List<UpgradeCategory> categories = upgradeSystem.UpgradeCategories;
+
+        for (int i = 0; i < categories.Count; i++)
+        {
+            UpgradeCategory category = categories[i];
+            CreateCategoryTab(category);
+        }
+    }
+
+    private void CreateCategoryTab(UpgradeCategory category)
+    {
+        // Create category object
+        GameObject categoryTab = Instantiate(m_CategoryPrefab, m_CategoryContent);
+        TextMeshProUGUI categoryText = categoryTab.GetComponentInChildren<TextMeshProUGUI>();
+
+        // Populate object with the upgrade category data
+        categoryText.text = category.CategoryName; // Set category name
+        // TODO set icon or something
     }
 
 }

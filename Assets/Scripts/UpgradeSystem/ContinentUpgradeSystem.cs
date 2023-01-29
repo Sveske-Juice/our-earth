@@ -15,6 +15,7 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     /// <summary> Event raised when an upgrade on the continent was upgraded to a new level. Will pass the Upgrade object as well as the continent. </summary>
     public static event Action<Upgrade, GameObject> OnContinentUpgraded;
     public string LinkedContinent => m_LinkedContinent;
+    public List<UpgradeCategory> UpgradeCategories => m_UpgradeCategories;
 
     private void OnEnable()
     {
@@ -44,6 +45,10 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     private void GenerateCategories()
     {
         m_UpgradeCategories.Add(new TransportCategory());
+        m_UpgradeCategories.Add(new FinanceCategory());
+        m_UpgradeCategories.Add(new HouseholdsCategory());
+        m_UpgradeCategories.Add(new PowergridCategory());
+        m_UpgradeCategories.Add(new IndustryCategory());
     }
 
     public double GetEmissionInfluence()
