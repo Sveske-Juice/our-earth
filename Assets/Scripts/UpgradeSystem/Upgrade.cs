@@ -1,3 +1,6 @@
+using UnityEngine;
+using System;
+
 public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 {
     protected int m_UpgradeLevel = 1;
@@ -10,6 +13,8 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     public abstract string UpgradeName { get; }
     public double BaseEmissionInfluence => m_BaseEmissionInfluence;
     public double BaseBudgetInfluence => m_BaseBudgetInfluence;
+
+    public static event Action<Upgrade> OnUpgradePerformed;
 
     /// <summary>
     /// Calculates the upgrade's yearly influence on the budget. 
@@ -51,5 +56,43 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
             return UpdateLevelPrice();
         
         return UpdateLevelPrice() * m_UpgradeScaling;
+    }
+
+    /// <summary>
+    /// Will determine if this upgrade is able to be upgraded.
+    /// </summary>
+    /// <returns>
+    /// If its able to be upgraded it will return an empty string. 
+    /// If not then a description describing why its not able will be returned.
+    /// </returns>
+    public string IsUpgradable()
+    {
+        // Check if player can afford
+        double balance = EconomyManager.Instance.GetBalance;
+        double nextUpgradePrice = GetNextUpgradePrice();
+
+        if (balance < nextUpgradePrice)
+            return "Can not afford!";
+
+        return "";
+    }
+
+    /// <summary>
+    /// Will upgrade this upgrade to the next level if possible.
+    /// </summary>
+    public void Upgrade2NextLevel()
+    {
+        // Make sure its possible to upgrade
+        string upgradeErr = IsUpgradable();
+        if (upgradeErr != "")
+        {
+            Debug.LogWarning($"Tried to upgrade ({UpgradeName}) when the upgrade is not upgradable! Reason: {upgradeErr}");
+            return;
+        }
+
+        EconomyManager.Instance.RegisterPurchase(GetNextUpgradePrice());
+        m_UpgradeLevel++;
+        
+        OnUpgradePerformed?.Invoke(this);
     }
 }

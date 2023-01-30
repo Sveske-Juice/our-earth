@@ -38,7 +38,8 @@ public class TimeManager : MonoBehaviour
 
         // Calculate year of the first frame
         m_Year = (int) (m_TimeData.secondsSpent / m_SecondsInYear) + m_StartYear;
-        OnYearChange?.Invoke(m_Year); // When game starts event should be raised with start year
+        
+        OnYearChange?.Invoke(m_Year); // Raise event so subscribers are notified about initial year
     }
 
     private void Update()

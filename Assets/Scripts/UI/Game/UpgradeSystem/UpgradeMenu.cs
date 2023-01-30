@@ -24,6 +24,7 @@ public class UpgradeMenu : MonoBehaviour
 
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
+    private UpgradeCategory m_LastClickedCategory;
 
     private void Awake()
     {
@@ -33,11 +34,13 @@ public class UpgradeMenu : MonoBehaviour
     private void OnEnable()
     {
         ContinentEventInitiator.OnContinentClick += TogglePopout;
+        EconomyManager.OnBalanceChange += (double balance) => UpdateUpgrades();
     }
 
     private void OnDisable()
     {
         ContinentEventInitiator.OnContinentClick -= TogglePopout;
+        EconomyManager.OnBalanceChange -= (double balance) => UpdateUpgrades();
     }
 
     /// <summary>
@@ -122,6 +125,9 @@ public class UpgradeMenu : MonoBehaviour
     /// </summary>
     private void CreateUpgradesBody(UpgradeCategory upgradeCategory)
     {
+        if (upgradeCategory == null)
+            return;
+        
         List<Upgrade> upgrades = upgradeCategory.Upgrades;
 
         for (int i = 0; i < upgrades.Count; i++)
@@ -143,11 +149,22 @@ public class UpgradeMenu : MonoBehaviour
         TextMeshProUGUI emissionImpact = upgradeBoxObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI budgetImpact = upgradeBoxObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
+        upgradeBoxObj.GetComponent<Button>().onClick.AddListener(() => OnUpgradeButtonClick(upgrade));
+
         // Populate object with the upgrade data
         upgradeTitle.text = upgrade.UpgradeName; // Upgrade name
         upgradePrice.text = $"${NumberPrefixer.PrefixNumber(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
         emissionImpact.text = $"Emission impact: {NumberPrefixer.PrefixNumber(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
         budgetImpact.text = $"Budget impact: {NumberPrefixer.PrefixNumber(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
+
+        // If the upgrade is not upgradable show lock ui and reason
+        string upgradeErr = upgrade.IsUpgradable();
+        if (upgradeErr == "")
+            return;
+
+        GameObject upgradeLockObj = upgradeObj.transform.GetChild(2).gameObject;
+        upgradeLockObj.SetActive(true);
+        upgradeLockObj.GetComponentInChildren<TextMeshProUGUI>().text = upgradeErr; // Set reason to why upgrade is not possible
     }
 
     /// <summary> Will handle creating one container with data about a category in the categories tab scroll view. </summary>
@@ -166,10 +183,26 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
-        // Clear upgrades ui from last active category
-        ClearUpgrades();
+        m_LastClickedCategory = categoryClicked;
         
-        CreateUpgradesBody(categoryClicked);
+        UpdateUpgrades();
     }
 
+    private void OnUpgradeButtonClick(Upgrade upgrade)
+    {
+        // Actually upgrade to next level
+        upgrade.Upgrade2NextLevel();
+
+        // Update UI
+        UpdateUpgrades();
+    }
+
+    /// <summary>
+    /// Will re-generate the upgrades body with new data.
+    /// </summary>
+    private void UpdateUpgrades()
+    {
+        ClearUpgrades();
+        CreateUpgradesBody(m_LastClickedCategory);
+    }
 }
