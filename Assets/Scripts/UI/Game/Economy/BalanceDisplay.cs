@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class BalanceDisplay : MonoBehaviour
 {
@@ -24,11 +25,32 @@ public class BalanceDisplay : MonoBehaviour
     /// </summary>
     private void UpdateBalanceText(double balance)
     {
-        // TODO Update the balance UI Text element with the prefixed version of the balance
+        string prefix = "";
+        double newBalance = 0d;
 
-        string balanceTxt = balance.ToString();
+        if (balance < 100000) // 100K
+        {
+            newBalance = balance / 1000;
+            prefix = "K";
+        }
+        else if (balance < 1000000000) // 100M
+        {
+            newBalance = balance / 1000000;
+            prefix = "M";
+        }
+        else if (balance < 1000000000000) // 100B
+        {
+            newBalance = balance / 1000000000;
+            prefix = "B";
+        }
+        else if (balance < 1000000000000000) // 100T
+        {
+            newBalance = balance / 1000000000000;
+            prefix = "T";
+        }
 
         // Set the text on the balance element
-        m_BalanceTextElement.text = balanceTxt;
+        newBalance = Math.Round(newBalance, 2);
+        m_BalanceTextElement.text = $"${newBalance}{prefix}";
     }
 }
