@@ -3,18 +3,20 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected int m_UpgradeLevel = 1;
     protected float m_UpgradeScaling = 1.25f;
     protected double m_CurrentUpgradeLevelPrice = 0d;
-    protected abstract double m_StartPrice { get; }
-    protected virtual double m_StartEmissionInfluence => 0d;
-    protected virtual double m_StartBudgetInfluence => 0d;
+    protected abstract double m_BasePrice { get; }
+    protected virtual double m_BaseEmissionInfluence => 0d;
+    protected virtual double m_BaseBudgetInfluence => 0d;
 
     public abstract string UpgradeName { get; }
+    public double BaseEmissionInfluence => m_BaseEmissionInfluence;
+    public double BaseBudgetInfluence => m_BaseBudgetInfluence;
 
     /// <summary>
     /// Calculates the upgrade's yearly influence on the budget. 
     /// </summary>
     public virtual double GetYearlyBudgetInfluence()
     {
-        return m_StartBudgetInfluence * m_UpgradeLevel;
+        return m_BaseBudgetInfluence * m_UpgradeLevel;
     }
 
     /// <summary>
@@ -22,7 +24,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     public virtual double GetEmissionInfluence()
     {
-        return m_StartEmissionInfluence * m_UpgradeLevel;
+        return m_BaseEmissionInfluence * m_UpgradeLevel;
     }
 
     /// <summary>
@@ -31,7 +33,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     protected virtual double UpdateLevelPrice()
     {
-        m_CurrentUpgradeLevelPrice = m_StartPrice;
+        m_CurrentUpgradeLevelPrice = m_BasePrice;
         for (int i = 1; i < m_UpgradeLevel; i++)
         {
             m_CurrentUpgradeLevelPrice *= m_UpgradeScaling;
@@ -49,21 +51,5 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
             return UpdateLevelPrice();
         
         return UpdateLevelPrice() * m_UpgradeScaling;
-    }
-
-    /// <summary>
-    /// Calculates the next emission reduction the next upgrade will reduce emissions by.
-    /// </summary>
-    public double GetNextEmissionInfluence()
-    {
-        return GetEmissionInfluence() + m_StartEmissionInfluence;
-    }
-
-    /// <summary>
-    /// Calculates the next emission reduction the next upgrade will reduce emissions by.
-    /// </summary>
-    public double GetNextBudgetInfluence()
-    {
-        return GetYearlyBudgetInfluence() + m_StartBudgetInfluence;
     }
 }

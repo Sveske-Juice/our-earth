@@ -146,8 +146,8 @@ public class UpgradeMenu : MonoBehaviour
         // Populate object with the upgrade data
         upgradeTitle.text = upgrade.UpgradeName; // Upgrade name
         upgradePrice.text = $"${NumberPrefixer.PrefixNumber(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
-        emissionImpact.text = $"Emission impact: {NumberPrefixer.PrefixNumber(upgrade.GetNextEmissionInfluence())}"; // Emission influence for next upgrade
-        budgetImpact.text = $"Budget impact: {NumberPrefixer.PrefixNumber(upgrade.GetNextBudgetInfluence())}"; // Budget influence for next upgrade
+        emissionImpact.text = $"Emission impact: {NumberPrefixer.PrefixNumber(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
+        budgetImpact.text = $"Budget impact: {NumberPrefixer.PrefixNumber(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
     }
 
     /// <summary> Will handle creating one container with data about a category in the categories tab scroll view. </summary>

@@ -12,28 +12,31 @@ public static class NumberPrefixer
         string prefix = "";
         double prefixedNum = 0d;
 
-        if (number < 100000) // 100K
+        int sign = Math.Sign(number);
+        number = Math.Abs(number); // Use absolute value
+
+        if (number < 100_000d) // 100K
         {
-            prefixedNum = number / 1000;
+            prefixedNum = number / 1_000d;
             prefix = "K";
         }
-        else if (number < 1000000000) // 100M
+        else if (number < 100_000_000d) // 100M
         {
-            prefixedNum = number / 1000000;
+            prefixedNum = number / 1_000_000d;
             prefix = "M";
         }
-        else if (number < 1000000000000) // 100B
+        else if (number < 100_000_000_000d) // 100B
         {
-            prefixedNum = number / 1000000000;
+            prefixedNum = number / 1_000_000_000d;
             prefix = "B";
         }
-        else if (number < 1000000000000000) // 100T
+        else if (number < 100_000_000_000_000d) // 100T
         {
-            prefixedNum = number / 1000000000000;
+            prefixedNum = number / 1_000_000_000_000d;
             prefix = "T";
         }
 
         // Set the text on the balance element
-        return Math.Round(prefixedNum, decimalRounding) + prefix;
+        return Math.Round(prefixedNum * sign, decimalRounding) + prefix;
     }
 }
