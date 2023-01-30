@@ -20,6 +20,6 @@ public class YearDisplay : MonoBehaviour
 
     private void UpdateYearText(int year)
     {
-        m_YearTextElement.text = $"Year: {year}";
+        m_YearTextElement.text = $"{year}";
     }
 }

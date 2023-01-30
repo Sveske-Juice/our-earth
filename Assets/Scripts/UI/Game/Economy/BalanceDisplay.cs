@@ -22,6 +22,6 @@ public class BalanceDisplay : MonoBehaviour
     private void UpdateBalanceText(double balance)
     {
         // Update balance ui element with prefixed version of number
-        m_BalanceTextElement.text = $"Balance: ${NumberPrefixer.PrefixNumber(balance)}";
+        m_BalanceTextElement.text = $"${NumberPrefixer.PrefixNumber(balance)}";
     }
 }
