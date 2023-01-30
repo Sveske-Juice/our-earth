@@ -11,24 +11,24 @@ Singleton Manager for managing the game and it's state.
 **/
 public class GameManager : MonoBehaviour
 {
-    private static GameManager m_Instance;
+    private static GameManager s_Instance;
     private GameState m_CurrentState;
     
-    public static GameManager Instance => m_Instance;
+    public static GameManager Instance => s_Instance;
     public GameState CurrentState => m_CurrentState;
     
 
     private void Awake()
     {
         // Check if another instance already exists
-        if (m_Instance != null)
+        if (s_Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
         // Else this is the first instance
-        m_Instance = this;
+        s_Instance = this;
     }
 
     private void OnEnable()

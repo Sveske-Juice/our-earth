@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    private TimeManager m_Instance;
+    private TimeManager s_Instance;
     private TimeData m_TimeData;
 
     [SerializeField, Tooltip("How many seconds that should pass before a new year starts")]
@@ -19,14 +19,14 @@ public class TimeManager : MonoBehaviour
     private void Awake()
     {
         // Check if another instance already exists
-        if (m_Instance != null)
+        if (s_Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
         // Else this is the first instance
-        m_Instance = this;
+        s_Instance = this;
     }
 
     private void Start()

@@ -34,14 +34,16 @@ public class UpgradeMenu : MonoBehaviour
     private void OnEnable()
     {
         ContinentEventInitiator.OnContinentClick += TogglePopout;
-        EconomyManager.OnBalanceChange += (double balance) => UpdateUpgrades();
+        EconomyManager.OnBalanceChange += OnBalanceChange;
     }
 
     private void OnDisable()
     {
         ContinentEventInitiator.OnContinentClick -= TogglePopout;
-        EconomyManager.OnBalanceChange -= (double balance) => UpdateUpgrades();
+        EconomyManager.OnBalanceChange -= OnBalanceChange;
     }
+
+    private void OnBalanceChange(double balance) => UpdateUpgrades();
 
     /// <summary>
     /// Will toggle the popout menu. Will also handle 

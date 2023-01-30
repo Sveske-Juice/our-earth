@@ -5,46 +5,68 @@ using System;
 
 public class PollutionManager : MonoBehaviour
 {
-    private PollutionManager m_Instance;
+    private static PollutionManager s_Instance;
     private PollutionData m_PollutionData;
 
-    private static List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
-    public static void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); }
-    public static void UnregisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Remove(influencer); }
+    private List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
+    public void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); UpdateEmission(); }
+    public void UnregisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Remove(influencer); UpdateEmission(); }
     
-    private double m_EmissionPrSecond = 0d;
+    private double m_EmissionPrYear;
+    private double m_BaseEmissionsPrYear = 3_000_000_000d; // 3B
+    public static PollutionManager Instance => s_Instance;
 
+    /// <summary> Event that gets raised when the yearly emissions change. Fx when an upgrade is purchased that influence the emissions. </summary>
+    public static event Action<double> OnYearlyEmissionChange;
     private void Awake()
     {
         // Check if another instance already exists
-        if (m_Instance != null)
+        if (s_Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
         // Else this is the first instance
-        m_Instance = this;
+        s_Instance = this;
     }
 
     private void Start()
     {
         LoadData();
+
+        // Update emissions pr year when initializing
+        UpdateEmission();
     }
+
+    private void OnEnable()
+    {
+        Upgrade.OnUpgradePerformed += OnUpgradePerformed;
+    }
+
+    private void OnDisable()
+    {
+        Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
+    }
+
+    private void OnUpgradePerformed(Upgrade upgrade) => UpdateEmission();
 
     /// <summary>
     /// Will update the emission pr second value based on
-    /// how many constructions are emitting emissions.
+    /// how much each continent is emitting.
     /// </summary>
     private void UpdateEmission()
     {
-        m_EmissionPrSecond = 0;
-        // TODO should loop through every pollution influencer and sum their influnce and store it in m_EmissionPrSecond
+        double oldEmissionPrSecond = m_EmissionPrYear;
+        m_EmissionPrYear = m_BaseEmissionsPrYear;
         for(int i = 0; i < m_PollutionInfluencers.Count; i++)
         {
-            m_EmissionPrSecond += m_PollutionInfluencers[i].GetEmissionInfluence();
+            m_EmissionPrYear += m_PollutionInfluencers[i].GetEmissionInfluence();
         }
 
+        // Raise event if updated value is different to avoid raising event when there is no difference
+        if (oldEmissionPrSecond != m_EmissionPrYear)
+            OnYearlyEmissionChange?.Invoke(m_EmissionPrYear);
     }
 
     private void LoadData()

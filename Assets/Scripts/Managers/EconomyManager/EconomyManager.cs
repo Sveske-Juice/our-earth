@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
 {
-    private static EconomyManager m_Instance;
+    private static EconomyManager s_Instance;
     private EconomyData m_EconomyData;
 
     [SerializeField, Tooltip("Amount of yearly income the game starts at")]
@@ -15,7 +15,7 @@ public class EconomyManager : MonoBehaviour
     private static List<IBudgetInfluencer> m_BudgetInfluencers = new List<IBudgetInfluencer>();
     public static void RegisterBudgetInfluncer(IBudgetInfluencer influencer) { m_BudgetInfluencers.Add(influencer); }
     public static void UnregisterBudgetInfluncer(IBudgetInfluencer influencer) { m_BudgetInfluencers.Remove(influencer); }
-    public static EconomyManager Instance => m_Instance;
+    public static EconomyManager Instance => s_Instance;
     public double GetBalance => m_EconomyData.balance;
 
     public static event Action<double> OnBalanceChange;
@@ -23,14 +23,14 @@ public class EconomyManager : MonoBehaviour
     private void Awake()
     {
         // Check if another instance already exists
-        if (m_Instance != null)
+        if (s_Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
         // Else this is the first instance
-        m_Instance = this;
+        s_Instance = this;
     }
 
     private void OnEnable()

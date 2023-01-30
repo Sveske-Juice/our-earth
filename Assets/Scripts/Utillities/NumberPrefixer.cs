@@ -15,7 +15,11 @@ public static class NumberPrefixer
         int sign = Math.Sign(number);
         number = Math.Abs(number); // Use absolute value
 
-        if (number < 999_999d) // 999K
+        if (number < 999)
+        {
+            
+        }
+        else if (number < 999_999d) // 999K
         {
             prefixedNum = number / 1_000d;
             prefix = "K";
