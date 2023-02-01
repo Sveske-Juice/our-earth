@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18029143, g: 0.22572419, b: 0.30693057, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2113,11 +2113,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 642182854221329895, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1868325541878334211, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
       propertyPath: m_IgnoreMask.m_Bits
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4305190906938610783, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Name
+      value: water
+      objectReference: {fileID: 0}
+    - target: {fileID: 4305190906938610783, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5027821002532909367, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
       propertyPath: m_Name
