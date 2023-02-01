@@ -12,8 +12,6 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     private string m_LinkedContinent = "";
     private List<UpgradeCategory> m_UpgradeCategories = new List<UpgradeCategory>();
 
-    /// <summary> Event raised when an upgrade on the continent was upgraded to a new level. Will pass the Upgrade object as well as the continent. </summary>
-    public static event Action<Upgrade, GameObject> OnContinentUpgraded;
     public string LinkedContinent => m_LinkedContinent;
     public List<UpgradeCategory> UpgradeCategories => m_UpgradeCategories;
 

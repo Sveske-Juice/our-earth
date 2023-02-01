@@ -14,6 +14,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     public double BaseEmissionInfluence => m_BaseEmissionInfluence;
     public double BaseBudgetInfluence => m_BaseBudgetInfluence;
 
+    /// <summary> Event raised when an upgrade was performed. Will pass the <seealso cref="Upgrade"/> instance. </summary>
     public static event Action<Upgrade> OnUpgradePerformed;
 
     /// <summary>

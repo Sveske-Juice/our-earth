@@ -36,16 +36,16 @@ public class EconomyManager : MonoBehaviour
     private void OnEnable()
     {
         TimeManager.OnYearChange += OnNewYear;
-        ContinentUpgradeSystem.OnContinentUpgraded += OnContinentUpgraded; // Update total yearly budget when new upgrade is performed
+        Upgrade.OnUpgradePerformed += OnUpgradePerformed; // Update total yearly budget when a new upgrade is performed
     }
 
     private void OnDisable()
     {
         TimeManager.OnYearChange -= OnNewYear;
-        ContinentUpgradeSystem.OnContinentUpgraded -= OnContinentUpgraded;
+        Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
     }
 
-    private void OnContinentUpgraded(Upgrade upgrade, GameObject continent) => UpdateTotalYearlyBudget();
+    private void OnUpgradePerformed(Upgrade upgrade) => UpdateTotalYearlyBudget();
 
     /// <summary>
     /// Updates the yearly budget based on the budget influencers.

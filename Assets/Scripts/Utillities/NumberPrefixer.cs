@@ -67,9 +67,6 @@ public static class NumberPrefixer
         // Get double of prefixed version of number
         double number = Double.Parse(prefixedNumber.Substring(0, prefixedNumber.Length - 1));
 
-        Debug.Log($"prefix: {prefix}");
-        Debug.Log($"double: {number}");
-
         // Expand number without prefix
         switch (prefix)
         {
@@ -93,10 +90,6 @@ public static class NumberPrefixer
                 number *= 1_000_000_000_000d; // 1Q
                 break;
         }
-
-        Debug.Log($"final: {number}");
-        
-
         return number;
     }
 }
