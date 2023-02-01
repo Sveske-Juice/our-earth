@@ -1,10 +1,8 @@
 public class TransportCategory : UpgradeCategory
 {
     public override string CategoryName => "Transport";
-    public TransportCategory()
-    {
-        GenerateUpgrades();
-    }
+    public TransportCategory() : base()
+    {}
 
     protected override void GenerateUpgrades()
     {

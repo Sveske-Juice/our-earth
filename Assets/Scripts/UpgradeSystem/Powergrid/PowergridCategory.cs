@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PowergridCategory : UpgradeCategory
 {
     public override string CategoryName => "Power Grid";
-    public PowergridCategory()
-    {
-        GenerateUpgrades();
-    }
+    public PowergridCategory() : base()
+    {}
 
     protected override void GenerateUpgrades()
     {

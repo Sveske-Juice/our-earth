@@ -7,6 +7,13 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
     public abstract string CategoryName { get; }
     protected List<Upgrade> m_Upgrades = new List<Upgrade>();
     public List<Upgrade> Upgrades => m_Upgrades;
+
+    public UpgradeCategory()
+    {
+        GenerateUpgrades();
+        SetCategoryReference();
+    }
+
     /// <summary>
     /// Generates all the upgrades linked to this upgrade category.
     /// </summary>
@@ -14,6 +21,25 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
     /// For example if the category is "Transport". Electric cars etc. upgrades will be generated.
     /// </remarks>
     protected abstract void GenerateUpgrades();
+
+    private void SetCategoryReference()
+    {
+        for (int i = 0; i < m_Upgrades.Count; i++)
+        {
+            m_Upgrades[i].ParentCategory = this;
+        }
+    }
+
+    public Upgrade GetUpgradeByName(string upgradeName)
+    {
+        for (int i = 0; i < m_Upgrades.Count; i++)
+        {
+            if (m_Upgrades[i].UpgradeName == upgradeName)
+                return m_Upgrades[i];
+        }
+
+        return null;
+    }
 
     public double GetYearlyBudgetInfluence()
     {

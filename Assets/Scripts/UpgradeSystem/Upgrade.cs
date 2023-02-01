@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System;
 
 public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
@@ -9,8 +10,12 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected virtual double m_BaseEmissionInfluence => 0d;
     protected virtual double m_BaseBudgetInfluence => 0d;
     protected virtual float m_UpgradeScaling => 1.25f;
+    protected virtual List<(string, int)> m_RequiredUpgrades => new List<(string, int)>();
+    protected UpgradeCategory m_ParentCategory;
 
     public abstract string UpgradeName { get; }
+    public int GetUpgradeLevel => m_UpgradeLevel;
+    public UpgradeCategory ParentCategory { set { m_ParentCategory = value; }}
     public double BaseEmissionInfluence => m_BaseEmissionInfluence;
     public double BaseBudgetInfluence => m_BaseBudgetInfluence;
 
@@ -66,7 +71,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// If its able to be upgraded it will return an empty string. 
     /// If not then a description describing why its not able will be returned.
     /// </returns>
-    public string IsUpgradable()
+    public virtual string IsUpgradable()
     {
         // Check if player can afford
         double balance = EconomyManager.Instance.GetBalance;
@@ -75,7 +80,46 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         if (balance < nextUpgradePrice)
             return "Can not afford!";
 
+        // Check if unlock requirements are reached
+        string requirementsNotMet = CheckForUnlockRequirements();
+        
+        if (requirementsNotMet != "")
+            return requirementsNotMet;
+
         return "";
+    }
+
+    /// <summary>
+    /// Will check if the unlock requirements are met.
+    /// </summary>
+    /// <returns>
+    /// An empty string indicating all requirements are met.
+    /// Or a string describing what requirements aren't met.
+    /// </returns>
+    private string CheckForUnlockRequirements()
+    {
+        string requirementsNotMet = "";
+
+        // Traverse all unlock requirements
+        for (int i = 0; i < m_RequiredUpgrades.Count; i++)
+        {
+            string upgradeName = m_RequiredUpgrades[i].Item1;
+            int requiredLevel = m_RequiredUpgrades[i].Item2;
+
+            // Try get the upgrade object from required upgrade name
+            Upgrade upgrade = m_ParentCategory.GetUpgradeByName(upgradeName);
+            if (upgrade == null)
+            {
+                Debug.LogWarning($"Upgrade {UpgradeName} requires {upgradeName} but it doesn't exist!");
+                return $"Unkown upgrade requirement: {upgradeName}";
+            }
+
+            // Make sure the level meets requirement
+            if (upgrade.GetUpgradeLevel < requiredLevel)
+                requirementsNotMet += $"{upgradeName} is required to be in level {requiredLevel}\n";
+        }
+
+        return requirementsNotMet;
     }
 
     /// <summary>

@@ -1,10 +1,8 @@
 public class FinanceCategory : UpgradeCategory
 {
     public override string CategoryName => "Finance";
-    public FinanceCategory()
-    {
-        GenerateUpgrades();
-    }
+    public FinanceCategory() : base()
+    {}
 
     protected override void GenerateUpgrades()
     {

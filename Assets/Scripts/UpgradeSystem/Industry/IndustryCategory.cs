@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class IndustryCategory : UpgradeCategory
 {
     public override string CategoryName => "Industry";
-    public IndustryCategory()
-    {
-        GenerateUpgrades();
-    }
+    public IndustryCategory() : base()
+    {}
 
     protected override void GenerateUpgrades()
     {
