@@ -19,6 +19,7 @@ public class EconomyManager : MonoBehaviour
     public double GetBalance => m_EconomyData.balance;
 
     public static event Action<double> OnBalanceChange;
+    public static event Action<double> OnYearlyIncomeChange;
 
     private void Awake()
     {
@@ -45,19 +46,25 @@ public class EconomyManager : MonoBehaviour
         Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
     }
 
-    private void OnUpgradePerformed(Upgrade upgrade) => UpdateTotalYearlyBudget();
+    private void OnUpgradePerformed(Upgrade upgrade) => UpdateTotalYearlyIncome();
 
     /// <summary>
-    /// Updates the yearly budget based on the budget influencers.
+    /// Updates the yearly income based on the income influencers.
     /// </summary>
-    private void UpdateTotalYearlyBudget()
+    private void UpdateTotalYearlyIncome()
     {
+        double oldYearlyIncome = m_YearlyIncome;
         m_YearlyIncome = m_BaseYearlyIncome;
 
         for (int i = 0; i < m_BudgetInfluencers.Count; i++)
         {
             m_YearlyIncome += m_BudgetInfluencers[i].GetYearlyBudgetInfluence();
         }
+
+        // If yearly income have changed then notify subscribers
+        if (oldYearlyIncome != m_YearlyIncome)
+            OnYearlyIncomeChange?.Invoke(m_YearlyIncome);
+
         Debug.Log($"Updated total yearly income. Budget is now {m_YearlyIncome}");
     }
 
@@ -65,8 +72,8 @@ public class EconomyManager : MonoBehaviour
     {
         LoadData();
 
-        // Update the yearly budget when initializing
-        UpdateTotalYearlyBudget();
+        // Update the yearly income when initializing
+        UpdateTotalYearlyIncome();
     }
 
     private void OnNewYear(int year)

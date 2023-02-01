@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Yearly Budget:'
+  m_text: 'Yearly Income:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1209,7 +1209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00076293945}
+  m_AnchoredPosition: {x: 0, y: -0.0008544922}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &792499518
@@ -2873,6 +2873,7 @@ GameObject:
   - component: {fileID: 1905024453}
   - component: {fileID: 1905024452}
   - component: {fileID: 1905024454}
+  - component: {fileID: 1905024455}
   m_Layer: 5
   m_Name: Overview Stats
   m_TagString: Untagged
@@ -2956,6 +2957,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_YearlyEmissionsTextElement: {fileID: 2025994186}
+--- !u!114 &1905024455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905024448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620fae9c50cd15875a2add4115ef7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_YearlyIncomeTextElement: {fileID: 1315009018}
 --- !u!1 &1912953246
 GameObject:
   m_ObjectHideFlags: 0
