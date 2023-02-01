@@ -8,12 +8,12 @@ public class PollutionManager : MonoBehaviour
     private static PollutionManager s_Instance;
     private PollutionData m_PollutionData;
 
-    private List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
-    public void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); UpdateEmission(); }
-    public void UnregisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Remove(influencer); UpdateEmission(); }
+    private static List<IPollutionInfluencer> m_PollutionInfluencers = new List<IPollutionInfluencer>();
+    public static void RegisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Add(influencer); UpdateEmission(); }
+    public static void UnregisterPollutionInfluencer(IPollutionInfluencer influencer) { m_PollutionInfluencers.Remove(influencer); UpdateEmission(); }
     
-    private double m_EmissionPrYear;
-    private double m_BaseEmissionsPrYear = 3_000_000_000d; // 3B
+    private static double m_EmissionPrYear;
+    private static double m_BaseEmissionsPrYear = NumberPrefixer.Parse("3B"); // 3B
     public static PollutionManager Instance => s_Instance;
 
     /// <summary> Event that gets raised when the yearly emissions change. Fx when an upgrade is purchased that influence the emissions. </summary>
@@ -55,7 +55,7 @@ public class PollutionManager : MonoBehaviour
     /// Will update the emission pr second value based on
     /// how much each continent is emitting.
     /// </summary>
-    private void UpdateEmission()
+    private static void UpdateEmission()
     {
         double oldEmissionPrSecond = m_EmissionPrYear;
         m_EmissionPrYear = m_BaseEmissionsPrYear;

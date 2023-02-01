@@ -12,5 +12,4 @@ public class TransportCategory : UpgradeCategory
         m_Upgrades.Add(new WalkableInfrastructure());
         m_Upgrades.Add(new PublicTransportInfrastructure());
     }
-
 }

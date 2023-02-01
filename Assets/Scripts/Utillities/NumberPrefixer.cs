@@ -1,6 +1,15 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Utility class to prefix and parse prefix numbers.
+/// For example to represent 2 trillion one could use
+/// "2T" etc.
+/// </summary>
+/// <remarks>
+/// This class is not pretty. Also there is no checks 
+/// for overflow, so be aware that it can happen.
+/// </remarks>
 public static class NumberPrefixer
 {
     public static string Prefix(double number)
@@ -52,15 +61,42 @@ public static class NumberPrefixer
 
     public static double Parse(string prefixedNumber)
     {
+        // Get prefix
         char prefix = prefixedNumber[prefixedNumber.Length - 1];
-        string number = prefixedNumber.Substring(0, prefixedNumber.Length - 1);
+
+        // Get double of prefixed version of number
+        double number = Double.Parse(prefixedNumber.Substring(0, prefixedNumber.Length - 1));
 
         Debug.Log($"prefix: {prefix}");
-        Debug.Log($"num: {number}");
-        // TODO also support decimals
+        Debug.Log($"double: {number}");
 
-        if (prefix == 'K')
-        {}
-        return 0d;
+        // Expand number without prefix
+        switch (prefix)
+        {
+            case 'K':
+                number *= 1_000d; // 1K
+                break;
+            
+            case 'M':
+                number *= 1_000_000d; // 1M
+                break;
+            
+            case 'B':
+                number *= 1_000_000_000d; // 1B
+                break;
+
+            case 'T':
+                number *= 1_000_000_000_000d; // 1T
+                break;
+
+            case 'Q':
+                number *= 1_000_000_000_000d; // 1Q
+                break;
+        }
+
+        Debug.Log($"final: {number}");
+        
+
+        return number;
     }
 }

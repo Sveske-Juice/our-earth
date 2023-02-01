@@ -21,14 +21,14 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     {
         // Register this system to the different managers
         EconomyManager.RegisterBudgetInfluncer(this);
-        PollutionManager.Instance.RegisterPollutionInfluencer(this);
+        PollutionManager.RegisterPollutionInfluencer(this);
     }
 
     private void OnDisable()
     {
         // Unregister this system from the different managers
         EconomyManager.UnregisterBudgetInfluncer(this);
-        PollutionManager.Instance.UnregisterPollutionInfluencer(this);
+        PollutionManager.UnregisterPollutionInfluencer(this);
     }
 
     private void Start()
