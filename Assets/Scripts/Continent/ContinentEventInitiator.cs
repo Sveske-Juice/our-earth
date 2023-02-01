@@ -45,7 +45,6 @@ public class ContinentEventInitiator : MonoBehaviour
         RaycastHit hit;
         if (!Physics.Raycast(ray, out hit, Mathf.Infinity))
             return;
-        
 
         if (hit.collider.tag != "Continent")
             return;
