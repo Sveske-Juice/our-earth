@@ -155,9 +155,9 @@ public class UpgradeMenu : MonoBehaviour
 
         // Populate object with the upgrade data
         upgradeTitle.text = upgrade.UpgradeName; // Upgrade name
-        upgradePrice.text = $"${NumberPrefixer.PrefixNumber(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
-        emissionImpact.text = $"Emission impact: {NumberPrefixer.PrefixNumber(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
-        budgetImpact.text = $"Budget impact: {NumberPrefixer.PrefixNumber(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
+        upgradePrice.text = $"${NumberPrefixer.Prefix(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
+        emissionImpact.text = $"Emission impact: {NumberPrefixer.Prefix(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
+        budgetImpact.text = $"Budget impact: {NumberPrefixer.Prefix(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
 
         // If the upgrade is not upgradable show lock ui and reason
         string upgradeErr = upgrade.IsUpgradable();

@@ -20,6 +20,6 @@ public class YearlyEmissionDisplay : MonoBehaviour
 
     private void UpdateYearlyEmissionsText(double yearlyEmissions)
     {
-        m_YearlyEmissionsTextElement.text = $"{NumberPrefixer.PrefixNumber(yearlyEmissions)} tons";
+        m_YearlyEmissionsTextElement.text = $"{NumberPrefixer.Prefix(yearlyEmissions)} tons";
     }
 }

@@ -4,11 +4,11 @@ using System;
 public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 {
     protected int m_UpgradeLevel = 1;
-    protected float m_UpgradeScaling = 1.25f;
     protected double m_CurrentUpgradeLevelPrice = 0d;
     protected abstract double m_BasePrice { get; }
     protected virtual double m_BaseEmissionInfluence => 0d;
     protected virtual double m_BaseBudgetInfluence => 0d;
+    protected virtual float m_UpgradeScaling => 1.25f;
 
     public abstract string UpgradeName { get; }
     public double BaseEmissionInfluence => m_BaseEmissionInfluence;

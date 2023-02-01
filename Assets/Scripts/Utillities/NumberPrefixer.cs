@@ -1,13 +1,14 @@
 using System;
+using UnityEngine;
 
 public static class NumberPrefixer
 {
-    public static string PrefixNumber(double number)
+    public static string Prefix(double number)
     {
-        return PrefixNumber(number, 2); // Default decimal rounding to 2
+        return Prefix(number, 2); // Default decimal rounding to 2
     }
 
-    public static string PrefixNumber(double number, int decimalRounding)
+    public static string Prefix(double number, int decimalRounding)
     {
         string prefix = "";
         double prefixedNum = number;
@@ -47,5 +48,19 @@ public static class NumberPrefixer
 
         // Set the text on the balance element
         return Math.Round(prefixedNum * sign, decimalRounding) + prefix;
+    }
+
+    public static double Parse(string prefixedNumber)
+    {
+        char prefix = prefixedNumber[prefixedNumber.Length - 1];
+        string number = prefixedNumber.Substring(0, prefixedNumber.Length - 1);
+
+        Debug.Log($"prefix: {prefix}");
+        Debug.Log($"num: {number}");
+        // TODO also support decimals
+
+        if (prefix == 'K')
+        {}
+        return 0d;
     }
 }
