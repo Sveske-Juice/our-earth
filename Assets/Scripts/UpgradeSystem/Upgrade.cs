@@ -10,6 +10,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected virtual double m_BaseEmissionInfluence => 0d;
     protected virtual double m_BaseBudgetInfluence => 0d;
     protected virtual float m_UpgradeScaling => 1.25f;
+    protected virtual int m_MaxUpgradeLevel => 10;
     protected virtual List<(string, int)> m_RequiredUpgrades => new List<(string, int)>();
     protected UpgradeCategory m_ParentCategory;
 
@@ -86,6 +87,10 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         if (requirementsNotMet != "")
             return requirementsNotMet;
 
+        // Check that it wont exceed the max level
+        if (m_UpgradeLevel >= m_MaxUpgradeLevel)
+            return "Max Level";
+        
         return "";
     }
 
