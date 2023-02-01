@@ -3,7 +3,7 @@ using System;
 
 public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 {
-    protected int m_UpgradeLevel = 1;
+    protected int m_UpgradeLevel = 0;
     protected double m_CurrentUpgradeLevelPrice = 0d;
     protected abstract double m_BasePrice { get; }
     protected virtual double m_BaseEmissionInfluence => 0d;
@@ -40,7 +40,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected virtual double UpdateLevelPrice()
     {
         m_CurrentUpgradeLevelPrice = m_BasePrice;
-        for (int i = 1; i < m_UpgradeLevel; i++)
+        for (int i = 0; i < m_UpgradeLevel; i++)
         {
             m_CurrentUpgradeLevelPrice *= m_UpgradeScaling;
         }
@@ -53,7 +53,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     public double GetNextUpgradePrice()
     {
         // If its the first upgrade then show base price
-        if (m_UpgradeLevel == 1)
+        if (m_UpgradeLevel == 0)
             return UpdateLevelPrice();
         
         return UpdateLevelPrice() * m_UpgradeScaling;
