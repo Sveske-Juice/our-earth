@@ -150,6 +150,7 @@ public class UpgradeMenu : MonoBehaviour
         TextMeshProUGUI upgradePrice = upgradeBoxObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI emissionImpact = upgradeBoxObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI budgetImpact = upgradeBoxObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI level = upgradeBoxObj.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
         upgradeBoxObj.GetComponent<Button>().onClick.AddListener(() => OnUpgradeButtonClick(upgrade));
 
@@ -158,6 +159,7 @@ public class UpgradeMenu : MonoBehaviour
         upgradePrice.text = $"${NumberPrefixer.Prefix(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
         emissionImpact.text = $"Emission impact: {NumberPrefixer.Prefix(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
         budgetImpact.text = $"Budget impact: {NumberPrefixer.Prefix(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
+        level.text = $"Level: {upgrade.GetUpgradeLevel}"; // Set upgrade level
 
         // If the upgrade is not upgradable show lock ui and reason
         string upgradeErr = upgrade.IsUpgradable();
