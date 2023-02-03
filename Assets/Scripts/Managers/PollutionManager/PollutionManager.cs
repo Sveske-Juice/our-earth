@@ -15,6 +15,7 @@ public class PollutionManager : MonoBehaviour
     private static double m_EmissionPrYear;
     private static double m_BaseEmissionsPrYear = NumberPrefixer.Parse("3B"); // 3B
     public static PollutionManager Instance => s_Instance;
+    public static double EmissionsPrYear => m_EmissionPrYear;
 
     /// <summary> Event that gets raised when the yearly emissions change. Fx when an upgrade is purchased that influence the emissions. </summary>
     public static event Action<double> OnYearlyEmissionChange;

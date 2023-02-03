@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-
-public class GameOverScreen : MonoBehaviour
+public class WinScreen : MonoBehaviour
 {
     public GameObject menu;
     private void OnEnable()
@@ -19,14 +16,9 @@ public class GameOverScreen : MonoBehaviour
 
     private void CheckForLoose(int year)
     {
-        if (year == 2030)
+        if (year == 2040 && PollutionManager.EmissionsPrYear == 0)
         {
             menu.SetActive(true);
         }
     }
-    public void RestartButton()
-    {
-        SceneManager.LoadScene("Game");
-    }
-
 }
