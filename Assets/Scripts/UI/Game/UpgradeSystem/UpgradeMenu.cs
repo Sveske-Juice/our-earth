@@ -8,6 +8,9 @@ using System;
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
 {
+    [SerializeField, Tooltip("Text element of where the continent name should be placed.")]
+    private TextMeshProUGUI m_ContinentNameElement;
+
     [Header("Category Display Body")]
     [SerializeField]
     private Transform m_CategoryContent;
@@ -25,6 +28,7 @@ public class UpgradeMenu : MonoBehaviour
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
     private UpgradeCategory m_LastClickedCategory;
+
 
     private void Awake()
     {
@@ -102,6 +106,9 @@ public class UpgradeMenu : MonoBehaviour
 
     private void CreateMenu(ContinentUpgradeSystem upgradeSystem)
     {
+        // Set continent title
+        m_ContinentNameElement.text = upgradeSystem.LinkedContinent;
+
         // Create upgrade categories assigned to this upgrade system.
         CreateCategoriesBody(upgradeSystem);
     }
