@@ -11,6 +11,7 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     [SerializeField, Tooltip("The Continent this upgrade system is attached to. Will default to name on object attached to")]
     private string m_LinkedContinent = "";
     private List<UpgradeCategory> m_UpgradeCategories = new List<UpgradeCategory>();
+    public bool highlighted = false;
 
     public string LinkedContinent => m_LinkedContinent;
     public List<UpgradeCategory> UpgradeCategories => m_UpgradeCategories;
