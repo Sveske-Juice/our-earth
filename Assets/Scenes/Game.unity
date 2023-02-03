@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1938,6 +1938,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1582987570, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: green
+      value: 
+      objectReference: {fileID: 1151844921754575795, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
+    - target: {fileID: 1582987570, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: selected
+      value: 
+      objectReference: {fileID: 2100000, guid: 9668b6b2e42fa17459632abf34cf8255, type: 2}
+    - target: {fileID: 983534445420536254, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 983534445420536254, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1151844921754575795, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
+    - target: {fileID: 983534445420536254, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9668b6b2e42fa17459632abf34cf8255, type: 2}
     - target: {fileID: 5027821002532909367, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
       propertyPath: m_Name
       value: Globe
@@ -1986,6 +2006,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.261
       objectReference: {fileID: 0}
+    - target: {fileID: 8170233301798910464, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8170233301798910464, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9668b6b2e42fa17459632abf34cf8255, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0233bdabf879f785c8f37404445ec81a, type: 3}
 --- !u!1 &1146885043
