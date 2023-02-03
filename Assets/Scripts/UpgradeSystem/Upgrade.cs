@@ -145,4 +145,13 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         
         OnUpgradePerformed?.Invoke(this);
     }
+
+    public void Downgrade()
+    {
+        if (m_UpgradeLevel <= 0)
+            return;
+        
+        m_UpgradeLevel--;
+        OnUpgradePerformed?.Invoke(this);
+    }
 }

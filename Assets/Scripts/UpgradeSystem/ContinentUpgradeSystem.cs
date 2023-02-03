@@ -70,4 +70,13 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
         return continentBudget;
     }
 
+    public List<Upgrade> GetUpgrades()
+    {
+        List<Upgrade> upgrades = new List<Upgrade>();
+        for (int i = 0; i < m_UpgradeCategories.Count; i++)
+        {
+            upgrades.AddRange(m_UpgradeCategories[i].Upgrades);
+        }
+        return upgrades;
+    }
 }
