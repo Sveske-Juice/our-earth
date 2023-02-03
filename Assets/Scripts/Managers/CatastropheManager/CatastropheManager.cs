@@ -10,8 +10,21 @@ public class CatastropheManager : MonoBehaviour
     [SerializeField, Tooltip("Its guranteed that a catastrophe will happen before this time")] private float m_MaxTimeForCatastrophe = 60f;
 
     /// <summary> Event that gets raised when a catastrophe starts. </summary>
-    public static event Action<string> OnCatastropheStart;
+    public static event Action<Catastrophe, Upgrade> OnCatastropheStart;
     private static System.Random m_Random = new System.Random();
+    private static List<Catastrophe> m_Catastrophes = new List<Catastrophe> { new Tsunami(), new Tornado(), new Earthquake(), new ForestFire() };
+
+    private void OnEnable()
+    {
+        DisasterWarningUI.OnCatastropheAvoided += ChooseNextCatastrophe;
+        DisasterWarningUI.OnCatastropheIgnored += ChooseNextCatastrophe;
+    }
+
+    private void OnDisable()
+    {
+        DisasterWarningUI.OnCatastropheAvoided -= ChooseNextCatastrophe;
+        DisasterWarningUI.OnCatastropheIgnored -= ChooseNextCatastrophe;
+    }
 
     private void Start()
     {
@@ -24,31 +37,66 @@ public class CatastropheManager : MonoBehaviour
         float timeForCatastrophe = UnityEngine.Random.Range(m_MinTimeForCatastrophe, m_MaxTimeForCatastrophe);
 
         // Get random catastrophe that will happen
-        Catastrophe randomCatastrophe = RandomEnumValue<Catastrophe>();
+        int randomIdx = m_Random.Next(m_Catastrophes.Count);
+        Catastrophe randomCatastrophe = m_Catastrophes[randomIdx];
 
         // Start countdown of the catastrophe
         StartCoroutine(StartCountdownForCatastrophe(timeForCatastrophe, randomCatastrophe));
     }
 
-    private IEnumerator StartCountdownForCatastrophe(float delay, Catastrophe catastropheType)
+    private IEnumerator StartCountdownForCatastrophe(float delay, Catastrophe catastrophe)
     {
         yield return new WaitForSecondsRealtime(delay);
-        PerformCatastrophe(catastropheType);
+        PerformCatastrophe(catastrophe);
     }
 
     /// <summary>
     /// Gets called when the catastrophe should get performed and will handle performing it.
     /// </summary>
-    private void PerformCatastrophe(Catastrophe catastropheType)
+    private void PerformCatastrophe(Catastrophe catastrophe)
     {
-        OnCatastropheStart?.Invoke(catastropheType.ToString());
+        Upgrade upgrade = GetRandomUpgrade();
+        if (upgrade == null)
+        {
+            ChooseNextCatastrophe();
+            return;
+        }
 
-        // When catastrophe has been performed a new one should be chosed
-        ChooseNextCatastrophe();
+        OnCatastropheStart?.Invoke(catastrophe, upgrade);
     }
-    static T RandomEnumValue<T> ()
+
+    private Upgrade GetRandomUpgrade()
     {
-        var v = Enum.GetValues (typeof (T));
-        return (T) v.GetValue (m_Random.Next(v.Length));
+        // Get all upgrades in scene
+        ContinentUpgradeSystem[] continents = GameObject.FindObjectsOfType<ContinentUpgradeSystem>();
+        print($"continent len: {continents.Length}");
+        List<Upgrade> upgrades = new List<Upgrade>();
+        for (int i = 0; i < continents.Length; i++)
+        {
+            upgrades.AddRange(continents[i].GetUpgrades());
+        }
+
+
+        print($"upgr len: {upgrades.Count}");
+        
+        // Pick upgrade which is upgraded at least once
+        List<Upgrade> leveledUpgrades = new List<Upgrade>();
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            if (upgrades[i].GetUpgradeLevel >= 1)
+                leveledUpgrades.Add(upgrades[i]);
+        }
+
+        print($"upgr len: {leveledUpgrades.Count}");
+        if (leveledUpgrades.Count <= 0)
+            return null;
+
+        // Pick random upgrade from leveled upgrades
+        int randomUpgradeIdx = m_Random.Next(leveledUpgrades.Count);
+        Debug.Log(randomUpgradeIdx);
+        if (randomUpgradeIdx < 0)
+            return null;
+        
+        return leveledUpgrades[randomUpgradeIdx];
     }
 }
