@@ -8,19 +8,21 @@ public class PopoutAnim : MonoBehaviour
     private bool m_IsOut = false;
 
     public bool IsOut => m_IsOut;
+    private float m_Width;
+    private RectTransform m_RectTransform;
 
-    [SerializeField]
-    private Transform m_OutOfViewPosition;
-
-    [SerializeField]
-    private Transform m_InViewPosition;
+    private void Start()
+    {
+        m_RectTransform = GetComponent<RectTransform>();
+        m_Width = m_RectTransform.rect.width*2f;
+    }
 
     //Onto screen
     public void PopOut() {
         if (m_IsOut)
             return;
 
-        LeanTween.moveX(this.gameObject, m_InViewPosition.position.x, 0.2f);
+        LeanTween.moveX(this.gameObject, 0f, 0.2f);
         m_IsOut = true;
     }
 
@@ -30,7 +32,7 @@ public class PopoutAnim : MonoBehaviour
         if (!m_IsOut)
             return;
         
-        LeanTween.moveX(this.gameObject, m_OutOfViewPosition.position.x, 0.2f);
+        LeanTween.moveX(this.gameObject, -m_Width, 0.2f);
         m_IsOut = false;
     }
 }

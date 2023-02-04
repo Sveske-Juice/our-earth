@@ -69,15 +69,11 @@ public class CatastropheManager : MonoBehaviour
     {
         // Get all upgrades in scene
         ContinentUpgradeSystem[] continents = GameObject.FindObjectsOfType<ContinentUpgradeSystem>();
-        print($"continent len: {continents.Length}");
         List<Upgrade> upgrades = new List<Upgrade>();
         for (int i = 0; i < continents.Length; i++)
         {
             upgrades.AddRange(continents[i].GetUpgrades());
         }
-
-
-        print($"upgr len: {upgrades.Count}");
         
         // Pick upgrade which is upgraded at least once
         List<Upgrade> leveledUpgrades = new List<Upgrade>();
@@ -87,7 +83,6 @@ public class CatastropheManager : MonoBehaviour
                 leveledUpgrades.Add(upgrades[i]);
         }
 
-        print($"upgr len: {leveledUpgrades.Count}");
         if (leveledUpgrades.Count <= 0)
             return null;
 

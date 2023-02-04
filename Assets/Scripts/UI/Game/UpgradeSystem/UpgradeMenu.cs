@@ -152,15 +152,18 @@ public class UpgradeMenu : MonoBehaviour
     /// <summary> Will handle creating one container with data about an upgrade in the upgrades scroll view. </summary>
     private void CreateUpgradeContainer(Upgrade upgrade)
     {
+        // TODO read objects from script attached to prefab and serialized from inspector instead og hardcode lol
+
         // Create upgrade object
         GameObject upgradeObj = Instantiate(m_UpgradePrefab, m_UpgradeContent);
-        GameObject upgradeBoxObj = upgradeObj.transform.GetChild(1).gameObject;
+        GameObject upgradeBoxObj = upgradeObj.transform.GetChild(5).GetChild(0).gameObject;
 
-        TextMeshProUGUI upgradeTitle = upgradeObj.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI upgradePrice = upgradeBoxObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI emissionImpact = upgradeBoxObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI budgetImpact = upgradeBoxObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI level = upgradeBoxObj.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI upgradeTitle = upgradeObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI explanationText = upgradeObj.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI levelText = upgradeObj.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI emissionImpact = upgradeObj.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI budgetImpact = upgradeObj.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI upgradePrice = upgradeBoxObj.GetComponentInChildren<TextMeshProUGUI>();
 
         upgradeBoxObj.GetComponent<Button>().onClick.AddListener(() => OnUpgradeButtonClick(upgrade));
 
@@ -169,14 +172,14 @@ public class UpgradeMenu : MonoBehaviour
         upgradePrice.text = $"${NumberPrefixer.Prefix(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
         emissionImpact.text = $"Emission impact: {NumberPrefixer.Prefix(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
         budgetImpact.text = $"Budget impact: {NumberPrefixer.Prefix(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade
-        level.text = $"Level: {upgrade.GetUpgradeLevel}"; // Set upgrade level
+        levelText.text = $"Level: {upgrade.GetUpgradeLevel}"; // Set upgrade level
 
         // If the upgrade is not upgradable show lock ui and reason
         string upgradeErr = upgrade.IsUpgradable();
         if (upgradeErr == "")
             return;
 
-        GameObject upgradeLockObj = upgradeObj.transform.GetChild(2).gameObject;
+        GameObject upgradeLockObj = upgradeObj.transform.GetChild(5).GetChild(1).gameObject;
         upgradeLockObj.SetActive(true);
         upgradeLockObj.GetComponentInChildren<TextMeshProUGUI>().text = upgradeErr; // Set reason to why upgrade is not possible
     }
