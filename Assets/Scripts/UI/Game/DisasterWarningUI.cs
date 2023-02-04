@@ -134,7 +134,7 @@ public class DisasterWarningUI : MonoBehaviour
         EconomyManager.Instance.RegisterPurchase(m_AvoidCatastropheCost);
 
         // Stop downgrade from happening
-        StopCoroutine("DowngradeUpgradeAfter");
+        StopAllCoroutines();
 
         Reset();
     }
