@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {x: 25, y: 25, z: 25, w: 25}
-  rect2props: {x: 0.000030517578, y: 0, z: 390.6765, w: 390.6765}
+  rect2props: {x: 0.000030517578, y: 0, z: 395.97983, w: 395.97983}
   image: {fileID: 1852499721}
 --- !u!1 &6132959015256687238
 GameObject:
@@ -389,8 +389,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -30, y: -30}
+  m_AnchoredPosition: {x: -7.5, y: 0}
+  m_SizeDelta: {x: -15, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6132959015553159253
 CanvasRenderer:
@@ -442,8 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109c41f08973846429af681aea0a30c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  r: {x: 50, y: 50, z: 25, w: 25}
-  rect2props: {x: 0.000030517578, y: -12.500061, z: 475.52933, w: 475.52933}
+  r: {x: 0, y: 50, z: 25, w: 0}
+  rect2props: {x: -18.74997, y: -6.250122, z: 498.5103, w: 489.67148}
   image: {fileID: 3936720226367232086}
 --- !u!1 &6132959015666576897
 GameObject:
@@ -454,8 +454,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6132959015666576896}
-  - component: {fileID: 6132959015666576899}
   - component: {fileID: 6132959015666576898}
+  - component: {fileID: 349651395}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -483,30 +483,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &6132959015666576899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6132959015666576897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 25
-    m_Bottom: 25
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 175, y: 100}
-  m_Spacing: {x: 20, y: 50}
-  m_Constraint: 0
-  m_ConstraintCount: 2
 --- !u!114 &6132959015666576898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +497,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &349651395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6132959015666576897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 25
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 25
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &6132959015775703069
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00027580297, y: 0}
+  m_AnchoredPosition: {x: 0.0005758137, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6132959015775703071
@@ -789,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {x: 35, y: 35, z: 0, w: 0}
-  rect2props: {x: 0.000030517578, y: -17.50003, z: 210.36429, w: 210.36429}
+  rect2props: {x: 0.000030517578, y: -17.50003, z: 215.66759, w: 215.66759}
   image: {fileID: 800214513}
 --- !u!1 &6132959017050170782
 GameObject:
@@ -972,6 +974,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109c41f08973846429af681aea0a30c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  r: {x: 50, y: 50, z: 25, w: 25}
-  rect2props: {x: 0.000030517578, y: -12.500122, z: 496.74255, w: 496.74255}
+  r: {x: 0, y: 50, z: 25, w: 0}
+  rect2props: {x: -18.74997, y: -6.250122, z: 514.4202, w: 505.5814}
   image: {fileID: 755470452325185252}
