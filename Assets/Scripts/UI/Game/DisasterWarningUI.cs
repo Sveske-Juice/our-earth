@@ -131,6 +131,10 @@ public class DisasterWarningUI : MonoBehaviour
 
     private void AcceptPayment()
     {
+        // Dont accept if not enough money
+        if (EconomyManager.Instance.GetBalance < m_AvoidCatastropheCost)
+            return;
+
         EconomyManager.Instance.RegisterPurchase(m_AvoidCatastropheCost);
 
         // Stop downgrade from happening
