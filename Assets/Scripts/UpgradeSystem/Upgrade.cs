@@ -4,21 +4,62 @@ using System;
 
 public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 {
+    protected UpgradeCategory m_ParentCategory;
     protected int m_UpgradeLevel = 0;
     protected double m_CurrentUpgradeLevelPrice = 0d;
     protected virtual double m_BaseEmissionInfluence => 0d;
     protected virtual double m_BaseBudgetInfluence => 0d;
     protected virtual float m_UpgradeScaling => 1.25f;
     protected virtual int m_MaxUpgradeLevel => 10;
+    protected virtual bool m_SpecialEffectUpgrade => false;
     protected abstract double m_BasePrice { get; }
+
+    /// <summary> Called just before the upgrade is performed. </summary>
+    protected virtual void OnBeforeUpgrade()
+    {
+        if (!m_SpecialEffectUpgrade)
+            return;
+        
+        // Just before upgrade is performed and UI is updated, check if the 
+        // special effect should be added or removed
+        if (m_UpgradeLevel == 1)
+        {
+            ApplySpecialEffects();
+        }
+        else
+        {
+            RemoveSpecialEffects();
+        }
+    }
     protected virtual List<(string, int)> m_RequiredUpgrades => new List<(string, int)>();
-    protected UpgradeCategory m_ParentCategory;
+    protected List<UpgradeModifier> m_UpgradeModifiers = new List<UpgradeModifier>();
+    protected virtual List<SpecialUpgradeEffect> m_UpgradeSpecialEffects => new List<SpecialUpgradeEffect>();
+    public void RegisterUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Add(modifier);
+    public void RemoveUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Remove(modifier);
 
     public abstract string UpgradeName { get; }
     public int GetUpgradeLevel => m_UpgradeLevel;
     public UpgradeCategory ParentCategory { set { m_ParentCategory = value; } get { return m_ParentCategory; }}
-    public double BaseEmissionInfluence => m_BaseEmissionInfluence;
-    public double BaseBudgetInfluence => m_BaseBudgetInfluence;
+    public double BaseEmissionInfluence { get {
+        double baseEmissionInfluence = m_BaseEmissionInfluence;
+
+        // Sum up all modifiers
+        for (int i = 0; i < m_UpgradeModifiers.Count; i++)
+        {
+            baseEmissionInfluence += m_UpgradeModifiers[i].GetEmissionInfluence();
+        }
+        return baseEmissionInfluence;
+    }}
+    public double BaseBudgetInfluence { get {
+        double baseBudgetInfluence = m_BaseBudgetInfluence;
+
+        // Sum up all modifiers
+        for (int i = 0; i < m_UpgradeModifiers.Count; i++)
+        {
+            baseBudgetInfluence += m_UpgradeModifiers[i].GetYearlyBudgetInfluence();
+        }
+        return baseBudgetInfluence;
+    }}
 
     /// <summary> Event raised when an upgrade was performed. Will pass the <seealso cref="Upgrade"/> instance. </summary>
     public static event Action<Upgrade> OnUpgradePerformed;
@@ -28,7 +69,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     public virtual double GetYearlyBudgetInfluence()
     {
-        return m_BaseBudgetInfluence * m_UpgradeLevel;
+        return BaseBudgetInfluence * m_UpgradeLevel;
     }
 
     /// <summary>
@@ -36,7 +77,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </summary>
     public virtual double GetEmissionInfluence()
     {
-        return m_BaseEmissionInfluence * m_UpgradeLevel;
+        return BaseEmissionInfluence * m_UpgradeLevel;
     }
 
     /// <summary>
@@ -142,7 +183,9 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 
         EconomyManager.Instance.RegisterPurchase(GetNextUpgradePrice());
         m_UpgradeLevel++;
-        
+
+        OnBeforeUpgrade();
+
         OnUpgradePerformed?.Invoke(this);
     }
 
@@ -152,6 +195,25 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
             return;
         
         m_UpgradeLevel--;
+
+        OnBeforeUpgrade();
+
         OnUpgradePerformed?.Invoke(this);
+    }
+    
+    protected void ApplySpecialEffects()
+    {
+        for (int i = 0; i < m_UpgradeSpecialEffects.Count; i++)
+        {
+            ParentCategory.RegisterSpecialEffect(m_UpgradeSpecialEffects[i]);
+        }
+    }
+
+    protected void RemoveSpecialEffects()
+    {
+        for (int i = 0; i < m_UpgradeSpecialEffects.Count; i++)
+        {
+            ParentCategory.UnregisterSpecialEffect(m_UpgradeSpecialEffects[i]);
+        }
     }
 }

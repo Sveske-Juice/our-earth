@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efa483995f31744aaf54ec32f055103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UpgradeDowngradeDelay: 20
+  m_UpgradeDowngradeDelay: 5
   m_MiddleScreenTime: 2.5
   m_CornerScreenTime: 7.5
   m_AvoidCatastropheCost: 5000000000000

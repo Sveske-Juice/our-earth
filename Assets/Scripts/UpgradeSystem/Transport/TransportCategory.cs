@@ -9,5 +9,6 @@ public class TransportCategory : UpgradeCategory
         m_Upgrades.Add(new ElectricCars());
         m_Upgrades.Add(new WalkableInfrastructure());
         m_Upgrades.Add(new PublicTransportInfrastructure());
+        m_Upgrades.Add(new GreenPublicTransport());
     }
 }

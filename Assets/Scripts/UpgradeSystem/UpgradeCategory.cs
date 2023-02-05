@@ -5,10 +5,11 @@ using UnityEngine;
 public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
 {
     public abstract string CategoryName { get; }
-    protected List<Upgrade> m_Upgrades = new List<Upgrade>();
     protected ContinentUpgradeSystem m_ParentContinentUpgradeSystem;
-    public List<Upgrade> Upgrades => m_Upgrades;
+    protected List<Upgrade> m_Upgrades = new List<Upgrade>();
+
     public ContinentUpgradeSystem ParentContinentUpgradeSystem { set { m_ParentContinentUpgradeSystem = value; } get { return m_ParentContinentUpgradeSystem; }}
+    public List<Upgrade> Upgrades => m_Upgrades;
 
 
     public UpgradeCategory()
@@ -61,5 +62,35 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
             categoryEmission += m_Upgrades[i].GetEmissionInfluence();
         }
         return categoryEmission;
+    }
+
+    public void RegisterSpecialEffect(SpecialUpgradeEffect specialUpgradeEffect)
+    {
+        // Find upgrade influenced by special effect
+        for (int i = 0; i < m_Upgrades.Count; i++)
+        {
+            Upgrade upgrade = m_Upgrades[i];
+            if (upgrade.UpgradeName == specialUpgradeEffect.UpgradeInfluenced)
+            {
+                Debug.Log($"Applying special effect: {specialUpgradeEffect.ToString()} on upgrade: {upgrade.UpgradeName} in category {upgrade.ParentCategory} in continent {upgrade.ParentCategory.ParentContinentUpgradeSystem.LinkedContinent}");
+                // Apply special effect on upgrade
+                upgrade.RegisterUpgradeModifier(specialUpgradeEffect.SpecialEffect);
+            }
+        }
+    }
+
+    public void UnregisterSpecialEffect(SpecialUpgradeEffect specialUpgradeEffect)
+    {
+        // Find upgrade influenced by special effect
+        for (int i = 0; i < m_Upgrades.Count; i++)
+        {
+            Upgrade upgrade = m_Upgrades[i];
+            if (upgrade.UpgradeName == specialUpgradeEffect.UpgradeInfluenced)
+            {
+                Debug.Log($"Removing special effect: {specialUpgradeEffect.ToString()} on upgrade: {upgrade.UpgradeName}");
+                // Remove special effect on upgrade
+                upgrade.RemoveUpgradeModifier(specialUpgradeEffect.SpecialEffect);
+            }
+        }
     }
 }

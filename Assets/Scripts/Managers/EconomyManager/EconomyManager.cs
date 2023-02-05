@@ -65,7 +65,7 @@ public class EconomyManager : MonoBehaviour
         if (oldYearlyIncome != m_YearlyIncome)
             OnYearlyIncomeChange?.Invoke(m_YearlyIncome);
 
-        Debug.Log($"Updated total yearly income. Budget is now {m_YearlyIncome}");
+        // Debug.Log($"Updated total yearly income. Budget is now {m_YearlyIncome}");
     }
 
     private void Start()

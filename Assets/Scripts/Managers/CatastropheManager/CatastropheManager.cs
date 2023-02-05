@@ -88,7 +88,6 @@ public class CatastropheManager : MonoBehaviour
 
         // Pick random upgrade from leveled upgrades
         int randomUpgradeIdx = m_Random.Next(leveledUpgrades.Count);
-        Debug.Log(randomUpgradeIdx);
         if (randomUpgradeIdx < 0)
             return null;
         
