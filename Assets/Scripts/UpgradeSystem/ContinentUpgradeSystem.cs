@@ -36,6 +36,7 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
             m_LinkedContinent = gameObject.name; // Use default
 
         GenerateCategories();
+        SetUpgradeSystemReference();
     }
 
     /// <summary>
@@ -48,6 +49,14 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
         m_UpgradeCategories.Add(new HouseholdsCategory());
         m_UpgradeCategories.Add(new PowergridCategory());
         m_UpgradeCategories.Add(new IndustryCategory());
+    }
+
+    private void SetUpgradeSystemReference()
+    {
+        for (int i = 0; i < m_UpgradeCategories.Count; i++)
+        {
+            m_UpgradeCategories[i].ParentContinentUpgradeSystem = this;
+        }
     }
 
     public double GetEmissionInfluence()

@@ -16,7 +16,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 
     public abstract string UpgradeName { get; }
     public int GetUpgradeLevel => m_UpgradeLevel;
-    public UpgradeCategory ParentCategory { set { m_ParentCategory = value; }}
+    public UpgradeCategory ParentCategory { set { m_ParentCategory = value; } get { return m_ParentCategory; }}
     public double BaseEmissionInfluence => m_BaseEmissionInfluence;
     public double BaseBudgetInfluence => m_BaseBudgetInfluence;
 

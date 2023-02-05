@@ -16,14 +16,14 @@ public class CatastropheManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DisasterWarningUI.OnCatastropheAvoided += ChooseNextCatastrophe;
-        DisasterWarningUI.OnCatastropheIgnored += ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheAvoided += ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheIgnored += ChooseNextCatastrophe;
     }
 
     private void OnDisable()
     {
-        DisasterWarningUI.OnCatastropheAvoided -= ChooseNextCatastrophe;
-        DisasterWarningUI.OnCatastropheIgnored -= ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheAvoided -= ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheIgnored -= ChooseNextCatastrophe;
     }
 
     private void Start()

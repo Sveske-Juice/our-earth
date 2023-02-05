@@ -6,7 +6,10 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
 {
     public abstract string CategoryName { get; }
     protected List<Upgrade> m_Upgrades = new List<Upgrade>();
+    protected ContinentUpgradeSystem m_ParentContinentUpgradeSystem;
     public List<Upgrade> Upgrades => m_Upgrades;
+    public ContinentUpgradeSystem ParentContinentUpgradeSystem { set { m_ParentContinentUpgradeSystem = value; } get { return m_ParentContinentUpgradeSystem; }}
+
 
     public UpgradeCategory()
     {
