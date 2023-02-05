@@ -169,6 +169,7 @@ public class UpgradeMenu : MonoBehaviour
 
         // Populate object with the upgrade data
         upgradeTitle.text = upgrade.UpgradeName; // Upgrade name
+        explanationText.text = upgrade.UpgradeExplanation; // Upgrade explanation/info about upgrade
         upgradePrice.text = $"${NumberPrefixer.Prefix(upgrade.GetNextUpgradePrice())}"; // Price for next upgrade
         emissionImpact.text = $"Emission impact: {NumberPrefixer.Prefix(upgrade.BaseEmissionInfluence)}"; // Emission influence for next upgrade
         budgetImpact.text = $"Budget impact: {NumberPrefixer.Prefix(upgrade.BaseBudgetInfluence)}"; // Budget influence for next upgrade

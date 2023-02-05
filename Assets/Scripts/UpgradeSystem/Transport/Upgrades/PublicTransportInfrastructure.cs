@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class PublicTransportInfrastructure : Upgrade
 {
     public override string UpgradeName => "Public Transport Infrastructure";
+    public override string UpgradeExplanation => "fill me up";
     protected override double m_BasePrice => NumberPrefixer.Parse("20T");
     protected override float m_UpgradeScaling => 1.3f;
     protected override double m_BaseEmissionInfluence => NumberPrefixer.Parse("-120M");

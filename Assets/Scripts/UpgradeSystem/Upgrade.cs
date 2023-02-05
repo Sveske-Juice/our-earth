@@ -13,6 +13,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     protected virtual int m_MaxUpgradeLevel => 10;
     protected virtual bool m_SpecialEffectUpgrade => false;
     protected abstract double m_BasePrice { get; }
+    public abstract string UpgradeExplanation { get; }
 
     /// <summary> Called just before the upgrade is performed. </summary>
     protected virtual void OnBeforeUpgrade()
