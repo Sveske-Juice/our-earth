@@ -21,6 +21,11 @@ public class ContinentHighlighter : MonoBehaviour
 
     private void HiglightContinent(GameObject continent)
     {
+        m_SelectedContinent = continent;
+        if (m_SelectedContinent != continent)
+            m_SelectedContinent.GetComponent<Renderer>().material = green;
+
+
         ContinentUpgradeSystem system = continent.GetComponent<ContinentUpgradeSystem>();
         if (!system.highlighted)
         {

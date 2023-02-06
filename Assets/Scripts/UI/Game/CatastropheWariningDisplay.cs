@@ -93,10 +93,7 @@ public class CatastropheWariningDisplay : MonoBehaviour
 
         m_AcceptPaymentButtonText.text = $"Pay ${NumberPrefixer.Prefix(m_AvoidCatastropheCost)} to avoid";
 
-        // Set middle screen position relative to height
-        Vector3 calcedMiddlePos = m_MiddlePosition.position;
-        calcedMiddlePos.y += m_RectTransform.rect.height / 2f; // When anchor is in the middle
-        transform.position = calcedMiddlePos;
+        transform.position = m_MiddlePosition.position;
 
         // Scale in
         LeanTween.scale(gameObject, m_MiddleScreenSize, time).setOnComplete(() => {
@@ -119,11 +116,7 @@ public class CatastropheWariningDisplay : MonoBehaviour
     // Move to corner
     public void Move2Corner()
     {
-        Vector3 calcedCornerPos = m_CornerPosition.position;
-        calcedCornerPos.x -= m_RectTransform.rect.width / 2f;
-        calcedCornerPos.y += m_RectTransform.rect.height;
-
-        LeanTween.move(gameObject, calcedCornerPos, 1f);
+        LeanTween.move(gameObject, m_CornerPosition.position, 1f);
         LeanTween.scale(gameObject, m_CornerScreenSize, 1f);
 
         // After moved to corner wait delay and remove text

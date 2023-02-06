@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 671629781155939721}
   - component: {fileID: 8118229065566311088}
   m_Layer: 5
-  m_Name: CatastropheWaarning
+  m_Name: CatastropheWarning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
