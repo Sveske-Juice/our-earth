@@ -8,9 +8,13 @@ public class ContinentEventInitiator : MonoBehaviour
 {
     private Camera m_MainCamera;
     private Vector2 m_LastClickPosition;
+    private GameObject m_SelectedContinent;
 
     /// <summary> Event that gets raised when a continent is clicked on. The gameobject of the continent is passed in. </summary>
-    public static event Action<GameObject> OnContinentClick;
+    public static event Action<GameObject> OnContinentSelect;
+
+    /// <summary> Event that gets raised when a continent is de-selected on. The gameobject of the continent is passed in. </summary>
+    public static event Action<GameObject> OnContinentDeselect;
 
     private void Awake()
     {
@@ -20,12 +24,12 @@ public class ContinentEventInitiator : MonoBehaviour
     private void OnEnable()
     {
         InputManager.PlayerControls.Navigation.Enable();
-        InputManager.PlayerControls.Navigation.ScreenClick.performed += OnScreenClick;
+        InputManager.PlayerControls.Navigation.ScreenClick.canceled += OnScreenClick;
         InputManager.PlayerControls.Navigation.OnMove.performed += UpdateClickPosition;
     }
     private void OnDisable()
     {
-        InputManager.PlayerControls.Navigation.ScreenClick.performed -= OnScreenClick;
+        InputManager.PlayerControls.Navigation.ScreenClick.canceled -= OnScreenClick;
         InputManager.PlayerControls.Navigation.OnMove.performed -= UpdateClickPosition;
         InputManager.PlayerControls.Navigation.Disable();
     }
@@ -49,7 +53,24 @@ public class ContinentEventInitiator : MonoBehaviour
         if (hit.collider.tag != "Continent")
             return;
         
-        OnContinentClick?.Invoke(hit.collider.gameObject);
+        GameObject clickedContinent = hit.collider.gameObject;
+        
+        // Scenario where a the continent clicked is the same as the one already selected.
+        // Here it should unselect the current selected continent
+        if (m_SelectedContinent == clickedContinent)
+        {
+            OnContinentDeselect?.Invoke(m_SelectedContinent);
+            m_SelectedContinent = null;
+            return;
+        }
+
+        // Scenario where a new continent is clicked - here the current selected continent
+        // should be deselected and the new clicked continent should be selected.
+        if (m_SelectedContinent != null)
+            OnContinentDeselect?.Invoke(m_SelectedContinent);
+
+        m_SelectedContinent = clickedContinent;
+        OnContinentSelect?.Invoke(clickedContinent);
     }
 
     private void UpdateClickPosition(InputAction.CallbackContext ctx)

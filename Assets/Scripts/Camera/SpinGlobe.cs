@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpinGlobe : MonoBehaviour
 {
+    // !FIXME needs serious refactor
     public float zoomSpeed;
     public float rotationSpeed = 1000;
     bool dragging = false;
@@ -37,14 +38,10 @@ public class SpinGlobe : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x - zoomSpeed, transform.localScale.y - zoomSpeed, transform.localScale.z - zoomSpeed);
         }
 
-    }
-
-    private void FixedUpdate()
-    {
         if (dragging)
         {
-            float x = Input.GetAxis("Mouse X") * rotationSpeed * transform.localScale.x - 4 * Time.fixedDeltaTime;
-            float y = Input.GetAxis("Mouse Y") * rotationSpeed * transform.localScale.y - 4 * Time.fixedDeltaTime;
+            float x = Input.GetAxis("Mouse X") * rotationSpeed * transform.localScale.x - 4 * Time.deltaTime;
+            float y = Input.GetAxis("Mouse Y") * rotationSpeed * transform.localScale.y - 4 * Time.deltaTime;
 
             rb.AddTorque(Vector3.down * x);
             rb.AddTorque(Vector3.right * y);

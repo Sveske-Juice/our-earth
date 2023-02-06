@@ -37,14 +37,16 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        ContinentEventInitiator.OnContinentClick += TogglePopout;
+        ContinentEventInitiator.OnContinentSelect += ShowMenu;
+        ContinentEventInitiator.OnContinentDeselect += CloseMenu;
         EconomyManager.OnBalanceChange += OnBalanceChange;
         Upgrade.OnUpgradePerformed += OnUpgradePerformed;
     }
 
     private void OnDisable()
     {
-        ContinentEventInitiator.OnContinentClick -= TogglePopout;
+        ContinentEventInitiator.OnContinentSelect -= ShowMenu;
+        ContinentEventInitiator.OnContinentDeselect -= CloseMenu;
         EconomyManager.OnBalanceChange -= OnBalanceChange;
         Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
     }
@@ -56,7 +58,7 @@ public class UpgradeMenu : MonoBehaviour
     /// Will toggle the popout menu. Will also handle 
     /// calling nescesary functions to show correct info.
     /// </summary>
-    private void TogglePopout(GameObject continent)
+    private void ShowMenu(GameObject continent)
     {
         // Get the upgrade system on the continent clicked
         ContinentUpgradeSystem clickedContinentSystem = continent.GetComponent<ContinentUpgradeSystem>();
@@ -70,17 +72,15 @@ public class UpgradeMenu : MonoBehaviour
         // Clear the menu from old data
         ClearMenu();
 
-        // Close the menu if the clicked continent is the same as the last clicked continent and the menu is already opened
-        if (m_PopoutAnimator.IsOut && m_LastClickedContinentSystem?.LinkedContinent == clickedContinentSystem.LinkedContinent)
-        {
-            m_PopoutAnimator.PopBack();
-            return;
-        }
-
         // A new continent was clicked - show new data relevant to clicked continent
         CreateMenu(clickedContinentSystem);
         m_PopoutAnimator.PopOut();
         m_LastClickedContinentSystem = clickedContinentSystem;
+    }
+
+    private void CloseMenu(GameObject continent)
+    {
+        m_PopoutAnimator.PopBack();
     }
 
     private void ClearMenu()

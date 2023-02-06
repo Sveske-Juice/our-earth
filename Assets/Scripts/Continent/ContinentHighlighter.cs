@@ -5,41 +5,57 @@ using UnityEngine.InputSystem;
 
 public class ContinentHighlighter : MonoBehaviour
 {
-    private GameObject m_SelectedContinent;
-    public Material green;
+    private Material[] m_SelectedOriginalMaterials;
+    private ContinentUpgradeSystem m_SelectedContinent;
     public Material selected;
 
     private void OnEnable()
     {
-        ContinentEventInitiator.OnContinentClick += HiglightContinent;
+        ContinentEventInitiator.OnContinentSelect += HiglightContinent;
+        ContinentEventInitiator.OnContinentDeselect += UnhiglightContinent;
     }
 
     private void OnDisable()
     {
-        ContinentEventInitiator.OnContinentClick -= HiglightContinent;
+        ContinentEventInitiator.OnContinentSelect -= HiglightContinent;
+        ContinentEventInitiator.OnContinentDeselect -= UnhiglightContinent;
     }
 
     private void HiglightContinent(GameObject continent)
     {
-        m_SelectedContinent = continent;
-        if (m_SelectedContinent != continent)
-            m_SelectedContinent.GetComponent<Renderer>().material = green;
-
-
+        Debug.Log($"Selecting {continent.name}");
         ContinentUpgradeSystem system = continent.GetComponent<ContinentUpgradeSystem>();
-        if (!system.highlighted)
+
+        m_SelectedContinent = system;
+        Renderer renderer = continent.GetComponent<Renderer>();
+        m_SelectedOriginalMaterials = renderer.materials;
+
+        // Replace all materials with the selected variant
+        Material[] selectedMats = new Material[renderer.materials.Length];
+        for (int i = 0; i < selectedMats.Length; i++)
         {
-            system.highlighted = true;
-            continent.GetComponent<Renderer>().material = selected;
-            //Debug.Log(continent.GetComponent<Renderer>().material.ToString());
-        }
-        else
-        {
-            system.highlighted = false;
-            print("green");
-            continent.GetComponent<Renderer>().material = green;
+            selectedMats[i] = selected;
         }
 
+        renderer.materials = selectedMats;
     }
 
+    private void UnhiglightContinent(GameObject continent)
+    {
+        Debug.Log($"UN!-selecting {continent.name}");
+        m_SelectedContinent.highlighted = false;
+
+        // Replace all the selected material back to the original material
+        Renderer renderer = m_SelectedContinent.GetComponent<Renderer>();
+        Material[] originalMats = new Material[renderer.materials.Length];
+        for (int i = 0; i < originalMats.Length; i++)
+        {
+            originalMats[i] = m_SelectedOriginalMaterials[i];
+        }
+
+        renderer.materials = originalMats;
+
+        m_SelectedContinent = null;
+        m_SelectedOriginalMaterials = null;
+    }
 }
