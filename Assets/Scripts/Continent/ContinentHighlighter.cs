@@ -23,7 +23,6 @@ public class ContinentHighlighter : MonoBehaviour
 
     private void HiglightContinent(GameObject continent)
     {
-        Debug.Log($"Selecting {continent.name}");
         ContinentUpgradeSystem system = continent.GetComponent<ContinentUpgradeSystem>();
 
         m_SelectedContinent = system;
@@ -42,7 +41,6 @@ public class ContinentHighlighter : MonoBehaviour
 
     private void UnhiglightContinent(GameObject continent)
     {
-        Debug.Log($"UN!-selecting {continent.name}");
         m_SelectedContinent.highlighted = false;
 
         // Replace all the selected material back to the original material

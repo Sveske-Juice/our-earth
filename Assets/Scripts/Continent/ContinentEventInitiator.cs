@@ -6,6 +6,8 @@ using System;
 
 public class ContinentEventInitiator : MonoBehaviour
 {
+    [SerializeField, Tooltip("Layer that should not be tested against being a continent.")]
+    private LayerMask m_IgnoreContinentLayers;
     private Camera m_MainCamera;
     private Vector2 m_LastClickPosition;
     private GameObject m_SelectedContinent;
@@ -24,12 +26,12 @@ public class ContinentEventInitiator : MonoBehaviour
     private void OnEnable()
     {
         InputManager.PlayerControls.Navigation.Enable();
-        InputManager.PlayerControls.Navigation.ScreenClick.canceled += OnScreenClick;
+        InputManager.PlayerControls.Navigation.ScreenClick.performed += OnScreenClick;
         InputManager.PlayerControls.Navigation.OnMove.performed += UpdateClickPosition;
     }
     private void OnDisable()
     {
-        InputManager.PlayerControls.Navigation.ScreenClick.canceled -= OnScreenClick;
+        InputManager.PlayerControls.Navigation.ScreenClick.performed -= OnScreenClick;
         InputManager.PlayerControls.Navigation.OnMove.performed -= UpdateClickPosition;
         InputManager.PlayerControls.Navigation.Disable();
     }
@@ -47,7 +49,7 @@ public class ContinentEventInitiator : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.blue, 5f);
 
         RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (!Physics.Raycast(ray, out hit, Mathf.Infinity, ~m_IgnoreContinentLayers))
             return;
 
         if (hit.collider.tag != "Continent")

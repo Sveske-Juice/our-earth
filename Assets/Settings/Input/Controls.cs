@@ -33,7 +33,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""id"": ""abfe5dec-8476-4663-8dd8-9628d23a57fa"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -94,7 +94,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Navigation
         m_Navigation = asset.FindActionMap("Navigation", throwIfNotFound: true);
@@ -196,6 +213,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public NavigationActions @Navigation => new NavigationActions(this);
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
+        }
+    }
     public interface INavigationActions
     {
         void OnScreenClick(InputAction.CallbackContext context);
