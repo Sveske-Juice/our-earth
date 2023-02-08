@@ -4,10 +4,12 @@ using UnityEngine;
 
 public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
 {
-    public abstract string CategoryName { get; }
+    protected abstract UpgradeCategoryData m_CategoryData { get; }
     protected ContinentUpgradeSystem m_ParentContinentUpgradeSystem;
     protected List<Upgrade> m_Upgrades = new List<Upgrade>();
 
+    public string CategoryName => m_CategoryData.CategoryName;
+    public Texture2D CategoryIcon => m_CategoryData.CategoryIcon;
     public ContinentUpgradeSystem ParentContinentUpgradeSystem { set { m_ParentContinentUpgradeSystem = value; } get { return m_ParentContinentUpgradeSystem; }}
     public List<Upgrade> Upgrades => m_Upgrades;
 
@@ -92,5 +94,13 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
                 upgrade.RemoveUpgradeModifier(specialUpgradeEffect.SpecialEffect);
             }
         }
+    }
+
+    protected UpgradeCategoryData LoadCategoryData(string path)
+    {
+        UpgradeCategoryData categoryData = Resources.Load<UpgradeCategoryData>(path);
+        if (categoryData == null)
+            Debug.LogError($"Could not load category data on {this}, path: {path}");
+        return categoryData;
     }
 }

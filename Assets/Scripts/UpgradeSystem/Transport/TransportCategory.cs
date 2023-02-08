@@ -1,8 +1,13 @@
+using UnityEngine;
+
 public class TransportCategory : UpgradeCategory
 {
-    public override string CategoryName => "Transport";
+    private UpgradeCategoryData m_ConcreteCategoryData;
+    protected override UpgradeCategoryData m_CategoryData => m_ConcreteCategoryData;
     public TransportCategory() : base()
-    {}
+    {
+        m_ConcreteCategoryData = LoadCategoryData("UpgradeSystem/Categories/Transport/TransportCategory");
+    }
 
     protected override void GenerateUpgrades()
     {

@@ -200,7 +200,7 @@ public class UpgradeMenu : MonoBehaviour
         // Populate object with the upgrade category data
         categoryBtn.onClick.AddListener(() => OnCategoryButtonClick(category)); // Set callback so we know when and what category was clicked
         categoryText.text = category.CategoryName; // Set category name
-        // TODO set icon or something
+        categoryObj.GetComponentInChildren<RawImage>().texture = category.CategoryIcon;
     }
 
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)

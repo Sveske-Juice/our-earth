@@ -1,8 +1,13 @@
+using UnityEngine;
+
 public class PowergridCategory : UpgradeCategory
 {
-    public override string CategoryName => "Power Grid";
+    private UpgradeCategoryData m_ConcreteCategoryData;
+    protected override UpgradeCategoryData m_CategoryData => m_ConcreteCategoryData;
     public PowergridCategory() : base()
-    {}
+    {
+        m_ConcreteCategoryData = LoadCategoryData("UpgradeSystem/Categories/Powergrid/PowergridCategory");
+    }
 
     protected override void GenerateUpgrades()
     {
