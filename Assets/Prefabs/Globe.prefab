@@ -89,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -956982965246322631, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -956982965246322631, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
       propertyPath: m_TagString
@@ -101,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3298205216517092431, guid: 9eb6333272b3d1c219708c1f7c330ac1, type: 3}
       propertyPath: m_Name
@@ -451,6 +451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ccfe778b3034a11a40ab1559cd063f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IgnoreContinentLayers:
+    serializedVersion: 2
+    m_Bits: 68
 --- !u!114 &3208520394160180211
 MonoBehaviour:
   m_ObjectHideFlags: 0
