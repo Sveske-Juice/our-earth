@@ -2,47 +2,31 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
+public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 {
+    public Upgrade(UpgradeData upgradeData)
+    {
+        m_UpgradeData = upgradeData;
+    }
+
+    protected UpgradeData m_UpgradeData;
     protected UpgradeCategory m_ParentCategory;
     protected int m_UpgradeLevel = 0;
     protected double m_CurrentUpgradeLevelPrice = 0d;
-    protected virtual double m_BaseEmissionInfluence => 0d;
-    protected virtual double m_BaseBudgetInfluence => 0d;
-    protected virtual float m_UpgradeScaling => 1.25f;
-    protected virtual int m_MaxUpgradeLevel => 10;
-    protected virtual bool m_SpecialEffectUpgrade => false;
-    protected abstract double m_BasePrice { get; }
-    public abstract string UpgradeExplanation { get; }
+    
+    // Wrappers for public fields in upgrade data
+    public string UpgradeName => m_UpgradeData.UpgradeName;
+    public string UpgradeExplanation => m_UpgradeData.UpgradeExplanation;
 
-    /// <summary> Called just before the upgrade is performed. </summary>
-    protected virtual void OnBeforeUpgrade()
-    {
-        if (!m_SpecialEffectUpgrade)
-            return;
-        
-        // Just before upgrade is performed and UI is updated, check if the 
-        // special effect should be added or removed
-        if (m_UpgradeLevel == 1)
-        {
-            ApplySpecialEffects();
-        }
-        else
-        {
-            RemoveSpecialEffects();
-        }
-    }
     protected virtual List<(string, int)> m_RequiredUpgrades => new List<(string, int)>();
     protected List<UpgradeModifier> m_UpgradeModifiers = new List<UpgradeModifier>();
     protected virtual List<SpecialUpgradeEffect> m_UpgradeSpecialEffects => new List<SpecialUpgradeEffect>();
     public void RegisterUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Add(modifier);
     public void RemoveUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Remove(modifier);
-
-    public abstract string UpgradeName { get; }
     public int GetUpgradeLevel => m_UpgradeLevel;
     public UpgradeCategory ParentCategory { set { m_ParentCategory = value; } get { return m_ParentCategory; }}
     public double BaseEmissionInfluence { get {
-        double baseEmissionInfluence = m_BaseEmissionInfluence;
+        double baseEmissionInfluence = m_UpgradeData.BaseEmissionInfluence;
 
         // Sum up all modifiers
         for (int i = 0; i < m_UpgradeModifiers.Count; i++)
@@ -52,7 +36,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         return baseEmissionInfluence;
     }}
     public double BaseBudgetInfluence { get {
-        double baseBudgetInfluence = m_BaseBudgetInfluence;
+        double baseBudgetInfluence = m_UpgradeData.BaseBudgetInfluence;
 
         // Sum up all modifiers
         for (int i = 0; i < m_UpgradeModifiers.Count; i++)
@@ -84,16 +68,34 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         return BaseEmissionInfluence * m_UpgradeLevel;
     }
 
+    /// <summary> Called just before the upgrade is performed. </summary>
+    protected virtual void OnBeforeUpgrade()
+    {
+        if (!m_UpgradeData.SpecialEffectUpgrade)
+            return;
+        
+        // Just before upgrade is performed and UI is updated, check if the 
+        // special effect should be added or removed
+        if (m_UpgradeLevel == 1)
+        {
+            ApplySpecialEffects();
+        }
+        else
+        {
+            RemoveSpecialEffects();
+        }
+    }
+
     /// <summary>
     /// Will calculate the price needed to get the upgrade from level 1 to m_UpgradeLevel.
     /// Will store how much that is in m_CurrentUpgradeLevelPrice. Useful for calculating price for next level.
     /// </summary>
     protected virtual double UpdateLevelPrice()
     {
-        m_CurrentUpgradeLevelPrice = m_BasePrice;
+        m_CurrentUpgradeLevelPrice = m_UpgradeData.BasePrice;
         for (int i = 0; i < m_UpgradeLevel; i++)
         {
-            m_CurrentUpgradeLevelPrice *= m_UpgradeScaling;
+            m_CurrentUpgradeLevelPrice *= m_UpgradeData.UpgradeScaling;
         }
         return m_CurrentUpgradeLevelPrice;
     }
@@ -107,7 +109,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         if (m_UpgradeLevel == 0)
             return UpdateLevelPrice();
         
-        return UpdateLevelPrice() * m_UpgradeScaling;
+        return UpdateLevelPrice() * m_UpgradeData.UpgradeScaling;
     }
 
     /// <summary>
@@ -120,7 +122,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     public virtual string IsUpgradable()
     {
         // Check that it wont exceed the max level
-        if (m_UpgradeLevel >= m_MaxUpgradeLevel)
+        if (m_UpgradeLevel >= m_UpgradeData.MaxUpgradeLevel)
             return "Max Level";
 
         // Check if unlock requirements are reached
@@ -160,7 +162,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
             Upgrade upgrade = m_ParentCategory.GetUpgradeByName(upgradeName);
             if (upgrade == null)
             {
-                Debug.LogWarning($"Upgrade {UpgradeName} requires {upgradeName} but it doesn't exist!");
+                Debug.LogWarning($"Upgrade {m_UpgradeData.UpgradeName} requires {upgradeName} but it doesn't exist!");
                 return $"Unkown upgrade requirement: {upgradeName}";
             }
 
@@ -181,7 +183,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         string upgradeErr = IsUpgradable();
         if (upgradeErr != "")
         {
-            Debug.LogWarning($"Tried to upgrade ({UpgradeName}) when the upgrade is not upgradable! Reason: {upgradeErr}");
+            Debug.LogWarning($"Tried to upgrade ({m_UpgradeData.UpgradeName}) when the upgrade is not upgradable! Reason: {upgradeErr}");
             return;
         }
 

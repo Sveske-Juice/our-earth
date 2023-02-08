@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
+public class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
 {
-    protected abstract UpgradeCategoryData m_CategoryData { get; }
+    protected UpgradeCategoryData m_CategoryData;
     protected ContinentUpgradeSystem m_ParentContinentUpgradeSystem;
     protected List<Upgrade> m_Upgrades = new List<Upgrade>();
 
@@ -14,8 +14,10 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
     public List<Upgrade> Upgrades => m_Upgrades;
 
 
-    public UpgradeCategory()
+    public UpgradeCategory(UpgradeCategoryData categoryData)
     {
+        m_CategoryData = categoryData;
+
         GenerateUpgrades();
         SetCategoryReference();
     }
@@ -26,7 +28,17 @@ public abstract class UpgradeCategory : IBudgetInfluencer, IPollutionInfluencer
     /// <remarks>
     /// For example if the category is "Transport". Electric cars etc. upgrades will be generated.
     /// </remarks>
-    protected abstract void GenerateUpgrades();
+    protected void GenerateUpgrades()
+    {
+        // Dynamically load all upgrade containers linked to this category
+        UpgradeData[] upgradeContainers = Resources.LoadAll<UpgradeData>($"UpgradeSystem/Upgrades/{m_CategoryData.CategoryName}");
+
+        // Generate upgrade objects from containers
+        for (int i = 0; i < upgradeContainers.Length; i++)
+        {
+            m_Upgrades.Add(new Upgrade(upgradeContainers[i]));
+        }
+    }
 
     private void SetCategoryReference()
     {

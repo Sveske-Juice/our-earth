@@ -6,6 +6,5 @@ using UnityEngine;
 public class UpgradeCategoryData : ScriptableObject
 {
     public string CategoryName;
-    
     public Texture2D CategoryIcon;
 }

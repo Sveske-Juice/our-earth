@@ -44,11 +44,13 @@ public class ContinentUpgradeSystem : MonoBehaviour, IBudgetInfluencer, IPolluti
     /// </summary>
     private void GenerateCategories()
     {
-        m_UpgradeCategories.Add(new TransportCategory());
-        m_UpgradeCategories.Add(new FinanceCategory());
-        m_UpgradeCategories.Add(new HouseholdsCategory());
-        m_UpgradeCategories.Add(new PowergridCategory());
-        m_UpgradeCategories.Add(new IndustryCategory());
+        // Create category objects which have their respective category data
+        UpgradeCategoryData[] categoryContainers = Resources.LoadAll<UpgradeCategoryData>("UpgradeSystem/Categories");
+
+        for (int i = 0; i < categoryContainers.Length; i++)
+        {
+            m_UpgradeCategories.Add(new UpgradeCategory(categoryContainers[i]));
+        }
     }
 
     private void SetUpgradeSystemReference()
