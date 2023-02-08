@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WinScreen : MonoBehaviour
+public class GameWinScreen : MonoBehaviour
 {
-    public GameObject menu;
+    [SerializeField] private GameObject m_GameWinMenu;
+
     private void OnEnable()
     {
-        TimeManager.OnYearChange += CheckForLoose;
+        GameOverManager.OnGameWin += ShowWinMenu;
     }
     private void OnDisable()
     {
-        TimeManager.OnYearChange -= CheckForLoose;
+        GameOverManager.OnGameWin -= ShowWinMenu;
     }
 
-    private void CheckForLoose(int year)
+    private void ShowWinMenu()
     {
-        if (year == 2040 && PollutionManager.EmissionsPrYear == 0)
-        {
-            menu.SetActive(true);
-        }
+        m_GameWinMenu.SetActive(true);
     }
 }

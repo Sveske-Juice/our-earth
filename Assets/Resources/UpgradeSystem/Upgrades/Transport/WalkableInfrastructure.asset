@@ -25,7 +25,7 @@ MonoBehaviour:
   UpgradeSpecialEffects:
   - m_UpgradeInfluenced: Electric Cars
     m_SpecialEffect:
-      m_EmissionInfluence: 50000000000
+      m_EmissionInfluence: -50000000000
       m_BudgetInfluence: 0
   - m_UpgradeInfluenced: Green Public Transport
     m_SpecialEffect:

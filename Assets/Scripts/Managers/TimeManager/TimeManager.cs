@@ -9,7 +9,7 @@ public class TimeManager : MonoBehaviour
     private TimeData m_TimeData;
 
     [SerializeField, Tooltip("How many seconds that should pass before a new year starts")]
-    private double m_SecondsInYear;
+    private double m_SecondsInYear = 15;
 
     [SerializeField, Tooltip("The year the game will start in")]
     private int m_StartYear = DateTime.Now.Year + 1; // The start year will be the next year from now

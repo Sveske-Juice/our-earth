@@ -9,7 +9,7 @@ public class EconomyManager : MonoBehaviour
     private EconomyData m_EconomyData;
 
     [SerializeField, Tooltip("Amount of yearly income the game starts at")]
-    private double m_BaseYearlyIncome = 100_000_000_000_000d; // 100 Trillion
+    private double m_BaseYearlyIncome = NumberPrefixer.Parse("1000Q"); // 100 Trillion
     private double m_YearlyIncome;
 
     private static List<IBudgetInfluencer> m_BudgetInfluencers = new List<IBudgetInfluencer>();
