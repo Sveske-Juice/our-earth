@@ -43,11 +43,13 @@ public class PollutionManager : MonoBehaviour
     private void OnEnable()
     {
         Upgrade.OnUpgradePerformed += OnUpgradePerformed;
+        Upgrade.OnDowngradePerformed += OnUpgradePerformed;
     }
 
     private void OnDisable()
     {
         Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
+        Upgrade.OnDowngradePerformed -= OnUpgradePerformed;
     }
 
     private void OnUpgradePerformed(Upgrade upgrade) => UpdateEmission();

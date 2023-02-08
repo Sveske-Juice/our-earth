@@ -41,6 +41,7 @@ public class UpgradeMenu : MonoBehaviour
         ContinentEventInitiator.OnContinentDeselect += CloseMenu;
         EconomyManager.OnBalanceChange += OnBalanceChange;
         Upgrade.OnUpgradePerformed += OnUpgradePerformed;
+        Upgrade.OnDowngradePerformed += OnUpgradePerformed;
     }
 
     private void OnDisable()
@@ -49,6 +50,7 @@ public class UpgradeMenu : MonoBehaviour
         ContinentEventInitiator.OnContinentDeselect -= CloseMenu;
         EconomyManager.OnBalanceChange -= OnBalanceChange;
         Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
+        Upgrade.OnDowngradePerformed -= OnUpgradePerformed;
     }
 
     private void OnBalanceChange(double balance) => UpdateUpgrades();

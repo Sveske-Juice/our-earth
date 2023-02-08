@@ -65,6 +65,9 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// <summary> Event raised when an upgrade was performed. Will pass the <seealso cref="Upgrade"/> instance. </summary>
     public static event Action<Upgrade> OnUpgradePerformed;
 
+    /// <summary> Event raised when an upgrade was downgraded. Will pass the <seealso cref="Upgrade"/> instance. </summary>
+    public static event Action<Upgrade> OnDowngradePerformed;
+
     /// <summary>
     /// Calculates the upgrade's yearly influence on the budget. 
     /// </summary>
@@ -199,7 +202,7 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 
         OnBeforeUpgrade();
 
-        OnUpgradePerformed?.Invoke(this);
+        OnDowngradePerformed?.Invoke(this);
     }
     
     protected void ApplySpecialEffects()

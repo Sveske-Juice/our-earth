@@ -132,11 +132,10 @@ public class CatastropheWariningDisplay : MonoBehaviour
         while (timeSpent < delay)
         {
             timeSpent += Time.deltaTime;
-            m_CatastropheExplanation.text = $"{upgradeSystem.LinkedContinent} -> {upgradeCategory.CategoryName} -> {upgrade.UpgradeName} will be downgraded to level {upgrade.GetUpgradeLevel - 1} in {Mathf.Round(Mathf.Clamp(delay - timeSpent, 0f, Mathf.Infinity))} seconds!";
+            m_CatastropheExplanation.text = $"A random upgrade will be downgraded in {Mathf.Round(Mathf.Clamp(delay - timeSpent, 0f, Mathf.Infinity))} seconds!";
             yield return new WaitForEndOfFrame();
         }
         upgrade.Downgrade();
-
         Reset();
     }
 

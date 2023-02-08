@@ -38,12 +38,14 @@ public class EconomyManager : MonoBehaviour
     {
         TimeManager.OnYearChange += OnNewYear;
         Upgrade.OnUpgradePerformed += OnUpgradePerformed; // Update total yearly budget when a new upgrade is performed
+        Upgrade.OnDowngradePerformed += OnUpgradePerformed; // Update total yearly budget when a new upgrade is performed
     }
 
     private void OnDisable()
     {
         TimeManager.OnYearChange -= OnNewYear;
         Upgrade.OnUpgradePerformed -= OnUpgradePerformed;
+        Upgrade.OnDowngradePerformed -= OnUpgradePerformed; // Update total yearly budget when a new upgrade is performed
     }
 
     private void OnUpgradePerformed(Upgrade upgrade) => UpdateTotalYearlyIncome();
