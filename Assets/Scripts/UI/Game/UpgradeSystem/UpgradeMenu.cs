@@ -183,7 +183,9 @@ public class UpgradeMenu : MonoBehaviour
             return;
 
         GameObject upgradeLockObj = upgradeObj.transform.GetChild(5).GetChild(1).gameObject;
+        GameObject upgradeLockedBackground = upgradeObj.transform.GetChild(6).gameObject;
         upgradeLockObj.SetActive(true);
+        upgradeLockedBackground.SetActive(true);
         upgradeLockObj.GetComponentInChildren<TextMeshProUGUI>().text = upgradeErr; // Set reason to why upgrade is not possible
     }
 

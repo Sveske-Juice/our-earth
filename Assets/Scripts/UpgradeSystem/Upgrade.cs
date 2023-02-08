@@ -119,12 +119,9 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     /// </returns>
     public virtual string IsUpgradable()
     {
-        // Check if player can afford
-        double balance = EconomyManager.Instance.GetBalance;
-        double nextUpgradePrice = GetNextUpgradePrice();
-
-        if (balance < nextUpgradePrice)
-            return "Can not afford!";
+        // Check that it wont exceed the max level
+        if (m_UpgradeLevel >= m_MaxUpgradeLevel)
+            return "Max Level";
 
         // Check if unlock requirements are reached
         string requirementsNotMet = CheckForUnlockRequirements();
@@ -132,10 +129,13 @@ public abstract class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         if (requirementsNotMet != "")
             return requirementsNotMet;
 
-        // Check that it wont exceed the max level
-        if (m_UpgradeLevel >= m_MaxUpgradeLevel)
-            return "Max Level";
-        
+        // Check if player can afford
+        double balance = EconomyManager.Instance.GetBalance;
+        double nextUpgradePrice = GetNextUpgradePrice();
+
+        if (balance < nextUpgradePrice)
+            return "Can not afford!";
+
         return "";
     }
 
