@@ -17,9 +17,18 @@ MonoBehaviour:
   UpgradeScaling: 1.25
   BaseEmissionInfluence: -50000000
   BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
-  SpecialEffectUpgrade: 0
+  MaxUpgradeLevel: 5
+  SpecialEffectUpgrade: 1
   RequiredUpgrades:
   - RequiredUpgradeName: Electric Cars
     RequiredUpgradeLevel: 5
-  UpgradeExplanation: 
+  UpgradeSpecialEffects:
+  - m_UpgradeInfluenced: Electric Cars
+    m_SpecialEffect:
+      m_EmissionInfluence: 50000000000
+      m_BudgetInfluence: 0
+  - m_UpgradeInfluenced: Green Public Transport
+    m_SpecialEffect:
+      m_EmissionInfluence: 0
+      m_BudgetInfluence: 50000000000000
+  UpgradeExplanation: ggggg

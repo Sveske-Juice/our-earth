@@ -20,7 +20,6 @@ public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
 
     
     protected List<UpgradeModifier> m_UpgradeModifiers = new List<UpgradeModifier>();
-    protected virtual List<SpecialUpgradeEffect> m_UpgradeSpecialEffects => new List<SpecialUpgradeEffect>();
     public void RegisterUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Add(modifier);
     public void RemoveUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Remove(modifier);
     public int GetUpgradeLevel => m_UpgradeLevel;
@@ -76,7 +75,7 @@ public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         
         // Just before upgrade is performed and UI is updated, check if the 
         // special effect should be added or removed
-        if (m_UpgradeLevel == 1)
+        if (m_UpgradeLevel >= 1)
         {
             ApplySpecialEffects();
         }
@@ -209,17 +208,17 @@ public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     
     protected void ApplySpecialEffects()
     {
-        for (int i = 0; i < m_UpgradeSpecialEffects.Count; i++)
+        for (int i = 0; i < (m_UpgradeData.UpgradeSpecialEffects?.Length ?? 0); i++)
         {
-            ParentCategory.RegisterSpecialEffect(m_UpgradeSpecialEffects[i]);
+            ParentCategory.RegisterSpecialEffect(m_UpgradeData.UpgradeSpecialEffects[i]);
         }
     }
 
     protected void RemoveSpecialEffects()
     {
-        for (int i = 0; i < m_UpgradeSpecialEffects.Count; i++)
+        for (int i = 0; i < (m_UpgradeData.UpgradeSpecialEffects?.Length ?? 0); i++)
         {
-            ParentCategory.UnregisterSpecialEffect(m_UpgradeSpecialEffects[i]);
+            ParentCategory.UnregisterSpecialEffect(m_UpgradeData.UpgradeSpecialEffects[i]);
         }
     }
 }

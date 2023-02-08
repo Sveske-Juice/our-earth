@@ -6,18 +6,13 @@ using UnityEngine;
 /// contribute to the total emission and budget influence.
 /// So each upgrade can have a "special effect" and influence other upgrades.
 /// </summary>
+[System.Serializable]
 public class UpgradeModifier : IBudgetInfluencer, IPollutionInfluencer
 {
     private static int s_IdIncrementor;
     private int m_Id = s_IdIncrementor++;
-    private double m_EmissionInfluence;
-    private double m_BudgetInfluence;
-
-    public UpgradeModifier(double emissionInfluence, double budgetInfluence)
-    {
-        m_EmissionInfluence = emissionInfluence;
-        m_BudgetInfluence = budgetInfluence;
-    }
+    [SerializeField] private double m_EmissionInfluence;
+    [SerializeField] private double m_BudgetInfluence;
 
     public double GetYearlyBudgetInfluence() => m_BudgetInfluence;
     public double GetEmissionInfluence() => m_EmissionInfluence;

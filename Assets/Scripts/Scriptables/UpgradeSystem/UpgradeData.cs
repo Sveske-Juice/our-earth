@@ -13,6 +13,7 @@ public class UpgradeData : ScriptableObject
     public int MaxUpgradeLevel = 10;
     public bool SpecialEffectUpgrade = false;
     public RequiredUpgradeData[] RequiredUpgrades;
+    public SpecialUpgradeEffect[] UpgradeSpecialEffects;
 
     [TextArea()]
     public string UpgradeExplanation;
