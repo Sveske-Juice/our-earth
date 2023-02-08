@@ -18,7 +18,7 @@ public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
     public string UpgradeName => m_UpgradeData.UpgradeName;
     public string UpgradeExplanation => m_UpgradeData.UpgradeExplanation;
 
-    protected virtual List<(string, int)> m_RequiredUpgrades => new List<(string, int)>();
+    
     protected List<UpgradeModifier> m_UpgradeModifiers = new List<UpgradeModifier>();
     protected virtual List<SpecialUpgradeEffect> m_UpgradeSpecialEffects => new List<SpecialUpgradeEffect>();
     public void RegisterUpgradeModifier(UpgradeModifier modifier) => m_UpgradeModifiers.Add(modifier);
@@ -153,10 +153,10 @@ public class Upgrade : IBudgetInfluencer, IPollutionInfluencer
         string requirementsNotMet = "";
 
         // Traverse all unlock requirements
-        for (int i = 0; i < m_RequiredUpgrades.Count; i++)
+        for (int i = 0; i < (m_UpgradeData.RequiredUpgrades?.Length ?? 0); i++)
         {
-            string upgradeName = m_RequiredUpgrades[i].Item1;
-            int requiredLevel = m_RequiredUpgrades[i].Item2;
+            string upgradeName = m_UpgradeData.RequiredUpgrades[i].RequiredUpgradeName;
+            int requiredLevel = m_UpgradeData.RequiredUpgrades[i].RequiredUpgradeLevel;
 
             // Try get the upgrade object from required upgrade name
             Upgrade upgrade = m_ParentCategory.GetUpgradeByName(upgradeName);

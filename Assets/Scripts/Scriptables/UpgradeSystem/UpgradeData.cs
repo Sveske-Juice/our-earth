@@ -12,6 +12,7 @@ public class UpgradeData : ScriptableObject
     public double BaseBudgetInfluence = 0d;
     public int MaxUpgradeLevel = 10;
     public bool SpecialEffectUpgrade = false;
+    public RequiredUpgradeData[] RequiredUpgrades;
 
     [TextArea()]
     public string UpgradeExplanation;
