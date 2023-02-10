@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-    
+    public void OnFlatEarthChange(bool state)
+    {
+        
+    }
 }
