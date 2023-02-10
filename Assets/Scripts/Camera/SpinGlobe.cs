@@ -13,6 +13,10 @@ public class SpinGlobe : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // If the earth should be flat earth then make flat
+        if (SettingsManager.Instance.FlatEarthModel)
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1f);
     }
 
     private void OnMouseDrag()
@@ -29,13 +33,24 @@ public class SpinGlobe : MonoBehaviour
 
         if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if(transform.localScale.x < 13)
-            transform.localScale = new Vector3(transform.localScale.x + zoomSpeed, transform.localScale.y + zoomSpeed, transform.localScale.z + zoomSpeed);
+            if (transform.localScale.x < 13)
+            {
+                if (SettingsManager.Instance.FlatEarthModel)
+                    transform.localScale = new Vector3(transform.localScale.x + zoomSpeed, transform.localScale.y + zoomSpeed, 1f);
+                else
+                    transform.localScale = new Vector3(transform.localScale.x + zoomSpeed, transform.localScale.y + zoomSpeed, transform.localScale.z + zoomSpeed);
+            }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if(transform.localScale.x > 4)
-            transform.localScale = new Vector3(transform.localScale.x - zoomSpeed, transform.localScale.y - zoomSpeed, transform.localScale.z - zoomSpeed);
+            if (transform.localScale.x > 4)
+            {
+                if (SettingsManager.Instance.FlatEarthModel)
+                    transform.localScale = new Vector3(transform.localScale.x - zoomSpeed, transform.localScale.y - zoomSpeed, 1f);
+                else
+                    transform.localScale = new Vector3(transform.localScale.x - zoomSpeed, transform.localScale.y - zoomSpeed, transform.localScale.z - zoomSpeed);
+
+            }
         }
 
         if (dragging)
