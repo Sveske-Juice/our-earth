@@ -8,9 +8,6 @@ public class TimeManager : MonoBehaviour
     private TimeManager s_Instance;
     private TimeData m_TimeData;
 
-    [SerializeField, Tooltip("How many seconds that should pass before a new year starts")]
-    private double m_SecondsInYear = 15;
-
     [SerializeField, Tooltip("The year the game will start in")]
     private int m_StartYear = DateTime.Now.Year + 1; // The start year will be the next year from now
     private int m_Year;
@@ -29,16 +26,24 @@ public class TimeManager : MonoBehaviour
         s_Instance = this;
     }
 
+    private void OnEnable()
+    {
+        YearSkipButton.OnYearSkipClicked += AdvanceYear;
+    }
+    private void OnDisable()
+    {
+        YearSkipButton.OnYearSkipClicked -= AdvanceYear;
+    }
+
+    private void AdvanceYear()
+    {
+        OnYearChange?.Invoke(++m_Year);
+    }
+
     private void Start()
     {
-        // TODO Load progress data from disk
-
-        // If there's no progress data then just load defaults
-        m_TimeData = new TimeData();
-
-        // Calculate year of the first frame
-        m_Year = (int) (m_TimeData.secondsSpent / m_SecondsInYear) + m_StartYear;
-        
+        LoadData();
+        m_Year = m_StartYear;
         OnYearChange?.Invoke(m_Year); // Raise event so subscribers are notified about initial year
     }
 
@@ -46,17 +51,13 @@ public class TimeManager : MonoBehaviour
     {
         // Update seconds spent in-game and the year
         m_TimeData.secondsSpent += Time.deltaTime;
-        int newYear = (int) (m_TimeData.secondsSpent / m_SecondsInYear) + m_StartYear;
+    }
 
-        // If the year changed then raise year change event
-        if (m_Year != newYear)
-        {
-            OnYearChange?.Invoke(newYear);
-        }
-        m_Year = newYear;
+    private void LoadData()
+    {
+        // TODO check for disk progress
 
-        // Debug.Log($"Seconds spent: {m_TimeData.secondsSpent}");
-        // Debug.Log($"Year: {m_Year}");
+        m_TimeData = new TimeData();
     }
 }
 
