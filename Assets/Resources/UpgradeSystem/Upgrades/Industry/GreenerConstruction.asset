@@ -29,4 +29,5 @@ MonoBehaviour:
     m_SpecialEffect:
       m_EmissionInfluence: -20000000000000
       m_BudgetInfluence: 0
-  UpgradeExplanation: 
+  UpgradeExplanation: Using greener construction materials is expensive, but leads
+    to less emissions in the long run.

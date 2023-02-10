@@ -21,4 +21,5 @@ MonoBehaviour:
   SpecialEffectUpgrade: 0
   RequiredUpgrades: []
   UpgradeSpecialEffects: []
-  UpgradeExplanation: 
+  UpgradeExplanation: Improved public transport infrastructure disincentivises private
+    transport, such as CO2-emitting cars.
