@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sound
 {
     public string name;
-
+    public SoundType soundType;
     public AudioClip clip;
 
     [Range(0f, 1f)]

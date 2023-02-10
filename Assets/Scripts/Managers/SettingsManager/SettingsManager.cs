@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -14,10 +15,27 @@ public class SettingsManager : MonoBehaviour
 
     public static SettingsManager Instance => s_Instance;
     public bool FlatEarthModel => m_Settings.FlatEarthModel;
+    public float MusicVolume => m_Settings.MusicVolume;
+    public float SoundVolume => m_Settings.SoundVolume;
+
+    public static event Action OnSettingsChanged;
+
 
     [Header("References")]
     [SerializeField]
+    private Button m_ApplySettingsButton;
+
+    [SerializeField]
+    private Button m_ResetSettingsButton;
+
+    [SerializeField]
     private Toggle m_FlatEarthToggle;
+
+    [SerializeField]
+    private Slider m_MusicVolumeSlider;
+
+    [SerializeField]
+    private Slider m_SoundVolumeSlider;
 
     private void Awake()
     {
@@ -33,8 +51,6 @@ public class SettingsManager : MonoBehaviour
 
         // Load settings if available
         m_Settings = LoadSettings();
-
-        print($"Loaded settings: {m_Settings.ToString()}");
     }
 
     private void Start()
@@ -42,7 +58,11 @@ public class SettingsManager : MonoBehaviour
         // Setup callbacks
         if (SceneManager.GetActiveScene().name == "Menu")
         {
-            m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; SaveSettings(); UpdateSettingValues(); });
+            m_ApplySettingsButton.onClick.AddListener(() => SaveSettings());
+            m_ResetSettingsButton.onClick.AddListener(() => ResetSettings());
+            m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; });
+            m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
+            m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
         }
 
         UpdateSettingValues();
@@ -56,6 +76,8 @@ public class SettingsManager : MonoBehaviour
 
         formatter.Serialize(stream, m_Settings);
         stream.Close();
+
+        OnSettingsChanged?.Invoke();
         print($"Saved settings: {m_Settings.ToString()}");
     }
 
@@ -65,7 +87,7 @@ public class SettingsManager : MonoBehaviour
         // If no settings found then just load defaults
         if (!File.Exists(m_SavePath))
         {
-            Debug.LogWarning("No settings found on disk. Will load defualt settings");
+            Debug.Log("No settings found on disk. Will load defualt settings");
             return new SettingsData();
         }
 
@@ -86,7 +108,20 @@ public class SettingsManager : MonoBehaviour
             return;
         
         m_FlatEarthToggle.isOn = m_Settings.FlatEarthModel;
-        
+        m_MusicVolumeSlider.value = m_Settings.MusicVolume;
+        m_SoundVolumeSlider.value = m_Settings.SoundVolume;
+    }
+
+    private void ResetSettings()
+    {
+        // Delete saved settings
+        File.Delete(m_SavePath);
+
+        // Load defaults
+        m_Settings = LoadSettings();
+        print($"Loaded settings: {m_Settings.ToString()}");
+
+        UpdateSettingValues();
     }
 }
 
@@ -94,9 +129,11 @@ public class SettingsManager : MonoBehaviour
 public class SettingsData
 {
     public bool FlatEarthModel = false;
+    public float MusicVolume = 1f;
+    public float SoundVolume = 1f;
 
     public override string ToString()
     {
-        return $"Settings Data: Flat earth: {FlatEarthModel}";
+        return $"Settings Data: Flat earth: {FlatEarthModel}, Music volume: {MusicVolume}, Sound Volume: {SoundVolume}";
     }
 }
