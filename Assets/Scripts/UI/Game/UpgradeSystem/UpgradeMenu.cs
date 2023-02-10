@@ -206,7 +206,10 @@ public class UpgradeMenu : MonoBehaviour
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
         m_LastClickedCategory = categoryClicked;
-        
+
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Button");
+
         UpdateUpgrades();
     }
 
@@ -214,6 +217,9 @@ public class UpgradeMenu : MonoBehaviour
     {
         // Actually upgrade to next level
         upgrade.Upgrade2NextLevel();
+
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Upgrade");
 
         // Update UI
         UpdateUpgrades();
