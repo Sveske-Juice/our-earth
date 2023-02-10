@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7470a9a7069175490a455e57c14182fb, type: 3}
-  m_Name: WalkableInfrastructure
+  m_Name: WorkFromHomeSubsidies
   m_EditorClassIdentifier: 
-  UpgradeName: Walkable Infrastructure
-  BasePrice: 15000000000000
+  UpgradeName: 
+  BasePrice: 0
   UpgradeScaling: 1.25
-  BaseEmissionInfluence: -50000000
+  BaseEmissionInfluence: 0
   BaseBudgetInfluence: 0
   MaxUpgradeLevel: 10
-  SpecialEffectUpgrade: 1
+  SpecialEffectUpgrade: 0
   RequiredUpgrades: []
   UpgradeSpecialEffects: []
-  UpgradeExplanation: ggggg
+  UpgradeExplanation: 

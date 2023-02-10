@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -39,7 +40,10 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         // Setup callbacks
-        m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; SaveSettings(); UpdateSettingValues(); });
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; SaveSettings(); UpdateSettingValues(); });
+        }
 
         UpdateSettingValues();
     }
@@ -61,7 +65,7 @@ public class SettingsManager : MonoBehaviour
         // If no settings found then just load defaults
         if (!File.Exists(m_SavePath))
         {
-            Debug.Log("No settings found on disk. Will load defualt settings");
+            Debug.LogWarning("No settings found on disk. Will load defualt settings");
             return new SettingsData();
         }
 
@@ -78,7 +82,11 @@ public class SettingsManager : MonoBehaviour
     private void UpdateSettingValues()
     {
         // Set default values
+        if (SceneManager.GetActiveScene().name != "Menu")
+            return;
+        
         m_FlatEarthToggle.isOn = m_Settings.FlatEarthModel;
+        
     }
 }
 

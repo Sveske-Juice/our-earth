@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: ElectricCars
   m_EditorClassIdentifier: 
   UpgradeName: Electric Cars
-  BasePrice: 5000000000
+  BasePrice: 5000000000000
   UpgradeScaling: 1.25
   BaseEmissionInfluence: -25000000
   BaseBudgetInfluence: 0
   MaxUpgradeLevel: 10
   SpecialEffectUpgrade: 0
+  RequiredUpgrades: []
+  UpgradeSpecialEffects: []
   UpgradeExplanation: Invests into electric cars and makes the continent switch from
     gas to electricity.

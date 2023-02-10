@@ -19,4 +19,6 @@ MonoBehaviour:
   BaseBudgetInfluence: -8000000000000
   MaxUpgradeLevel: 10
   SpecialEffectUpgrade: 0
+  RequiredUpgrades: []
+  UpgradeSpecialEffects: []
   UpgradeExplanation: 

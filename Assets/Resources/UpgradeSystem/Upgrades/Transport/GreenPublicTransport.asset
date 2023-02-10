@@ -14,9 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpgradeName: Green Public Transport
   BasePrice: 150000000000000
-  UpgradeScaling: 1.25
+  UpgradeScaling: 1
   BaseEmissionInfluence: 0
   BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
-  SpecialEffectUpgrade: 0
+  MaxUpgradeLevel: 1
+  SpecialEffectUpgrade: 1
+  RequiredUpgrades:
+  - RequiredUpgradeName: Electric Cars
+    RequiredUpgradeLevel: 4
+  - RequiredUpgradeName: Public Transport
+    RequiredUpgradeLevel: 2
+  UpgradeSpecialEffects:
+  - m_UpgradeInfluenced: Public Transport
+    m_SpecialEffect:
+      m_EmissionInfluence: -30000000
+      m_BudgetInfluence: 0
   UpgradeExplanation: 
