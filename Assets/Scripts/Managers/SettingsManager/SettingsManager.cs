@@ -58,8 +58,8 @@ public class SettingsManager : MonoBehaviour
         // Setup callbacks
         if (SceneManager.GetActiveScene().name == "Menu")
         {
-            m_ApplySettingsButton.onClick.AddListener(() => SaveSettings());
-            m_ResetSettingsButton.onClick.AddListener(() => ResetSettings());
+            m_ApplySettingsButton.onClick.AddListener(delegate () { SaveSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
+            m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
             m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; });
             m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
             m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });

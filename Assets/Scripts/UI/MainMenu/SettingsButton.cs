@@ -9,6 +9,9 @@ public class SettingsButton : MonoBehaviour
 
     public void OnSettingsButtonClick()
     {
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Button");
+
         // Toggle menu
         m_SettingsMenu.SetActive(!m_SettingsMenu.activeSelf);
     }

@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         fader.gameObject.SetActive(true);
 
         LeanTween.scale(fader, Vector3.zero, 1);

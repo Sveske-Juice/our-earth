@@ -146,6 +146,7 @@ public class CatastropheWariningDisplay : MonoBehaviour
             return;
 
         EconomyManager.Instance.RegisterPurchase(m_AvoidCatastropheCost);
+        FindObjectOfType<AudioManager>().Play("Upgrade");
 
         // Stop downgrade from happening
         StopAllCoroutines();
