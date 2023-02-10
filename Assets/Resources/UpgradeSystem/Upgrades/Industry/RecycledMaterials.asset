@@ -25,4 +25,5 @@ MonoBehaviour:
     m_SpecialEffect:
       m_EmissionInfluence: -5000000
       m_BudgetInfluence: 0
-  UpgradeExplanation: 
+  UpgradeExplanation: Using recycled materials majorly decreases the pollution caused
+    by the production of goods.

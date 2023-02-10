@@ -21,4 +21,5 @@ MonoBehaviour:
   SpecialEffectUpgrade: 0
   RequiredUpgrades: []
   UpgradeSpecialEffects: []
-  UpgradeExplanation: 
+  UpgradeExplanation: Investing in more efficient ways of generating renewable energy
+    leads to a decrease in the use of CO2-emitting energy sources.

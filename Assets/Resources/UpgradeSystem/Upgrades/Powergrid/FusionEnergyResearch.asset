@@ -25,4 +25,6 @@ MonoBehaviour:
   - RequiredUpgradeName: Renewable Energy Sources
     RequiredUpgradeLevel: 5
   UpgradeSpecialEffects: []
-  UpgradeExplanation: 
+  UpgradeExplanation: Fusion breakthroughs allow a complete outphasing of non-renewable
+    energy sources, such as fossil fuels. This massively improves overall emissions,
+    though it is also extremely expensive to research.
