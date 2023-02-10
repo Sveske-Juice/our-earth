@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    // PLease dont see code belowww :DD (super guud code)
+
     private static AudioManager s_Instance;
     public Sound[] sounds;
 
+    public Sound[] musicSounds;
+
     [SerializeField]
     private AudioSource m_AudioSource;
+
+    [SerializeField]
+    private AudioSource m_MusicSource;
 
 
     [SerializeField]
@@ -50,9 +57,19 @@ public class AudioManager : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"Playing sound with vol: {s.source.volume}");
         s.source.clip = s.clip;
         s.source.pitch = s.pitch;
         s.source.Play();
+    }
+
+    public void SetMusicSound(Sound music)
+    {
+        if (music.soundType != SoundType.Music)
+            return;
+
+        music.source = m_MusicSource;
+        music.source.clip = music.clip;
+        music.source.outputAudioMixerGroup = m_MusicMixerGroup;
+        music.source.loop = true;
     }
 }
