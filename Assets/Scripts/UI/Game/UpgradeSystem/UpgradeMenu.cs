@@ -206,7 +206,10 @@ public class UpgradeMenu : MonoBehaviour
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
         m_LastClickedCategory = categoryClicked;
-        
+
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Button");
+
         UpdateUpgrades();
     }
 
@@ -217,7 +220,6 @@ public class UpgradeMenu : MonoBehaviour
 
         //Play Sound
         FindObjectOfType<AudioManager>().Play("Upgrade");
-        print("Upgrade soundy:)");
 
         // Update UI
         UpdateUpgrades();

@@ -23,6 +23,9 @@ public class ContinentHighlighter : MonoBehaviour
 
     private void HiglightContinent(GameObject continent)
     {
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Button");
+
         ContinentUpgradeSystem system = continent.GetComponent<ContinentUpgradeSystem>();
 
         m_SelectedContinent = system;

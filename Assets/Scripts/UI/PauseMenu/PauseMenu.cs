@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    [SerializeField] RectTransform fader;
     Scene scene;
 
     private void Awake()
@@ -16,8 +17,15 @@ public class PauseMenu : MonoBehaviour
     public void BackToMenu()
     {
         FindObjectOfType<AudioManager>().Play("Button");
-        SceneManager.LoadScene("Menu");
+
+        fader.gameObject.SetActive(true);
         Time.timeScale = 1;
+        LeanTween.scale(fader, Vector3.zero, 1);
+        LeanTween.scale(fader, new Vector3(1, 1, 1), 1).setOnComplete(() => {
+            SceneManager.LoadScene("Menu");
+        });
+        
+        
     }
 
     public void PauseGame()
@@ -37,7 +45,13 @@ public class PauseMenu : MonoBehaviour
     public void ResetLevel()
     {
         FindObjectOfType<AudioManager>().Play("Button");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        fader.gameObject.SetActive(true);
+        Time.timeScale = 1;
+        LeanTween.scale(fader, Vector3.zero, 1);
+        LeanTween.scale(fader, new Vector3(1, 1, 1), 1).setOnComplete(() => {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        });
+        
     }
 }
 
