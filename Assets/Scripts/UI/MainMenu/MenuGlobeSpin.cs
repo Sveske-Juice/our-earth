@@ -13,6 +13,6 @@ public class MenuGlobeSpin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(.05f, .05f, .1f * Time.deltaTime); //rotates 50 degrees per second around z axis
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a99df2c648c527e4ea9d83e11782eff2
+guid: 7cf6edde1474e364bbdcd89f6025d85e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Scholarly Ambition
+  - Plumpfull
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
