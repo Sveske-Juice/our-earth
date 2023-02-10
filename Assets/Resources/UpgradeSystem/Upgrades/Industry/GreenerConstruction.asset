@@ -12,13 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470a9a7069175490a455e57c14182fb, type: 3}
   m_Name: GreenerConstruction
   m_EditorClassIdentifier: 
-  UpgradeName: Greener construction
-  BasePrice: 0
-  UpgradeScaling: 1.25
-  BaseEmissionInfluence: 0
-  BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
-  SpecialEffectUpgrade: 0
+  UpgradeName: Greener Construction
+  BasePrice: 10000000000000
+  UpgradeScaling: 1
+  BaseEmissionInfluence: -10000000
+  BaseBudgetInfluence: -10000000000000
+  MaxUpgradeLevel: 1
+  SpecialEffectUpgrade: 1
   RequiredUpgrades: []
-  UpgradeSpecialEffects: []
+  UpgradeSpecialEffects:
+  - m_UpgradeInfluenced: Walkable Infrastructure
+    m_SpecialEffect:
+      m_EmissionInfluence: -15000000000000
+      m_BudgetInfluence: 0
+  - m_UpgradeInfluenced: Public Transport Infrastructure
+    m_SpecialEffect:
+      m_EmissionInfluence: -20000000000000
+      m_BudgetInfluence: 0
   UpgradeExplanation: 

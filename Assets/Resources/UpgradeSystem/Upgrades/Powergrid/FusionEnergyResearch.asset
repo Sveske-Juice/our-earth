@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: FusionEnergyResearch
   m_EditorClassIdentifier: 
   UpgradeName: Fusion Energy Research
-  BasePrice: 0
-  UpgradeScaling: 1.25
-  BaseEmissionInfluence: 0
-  BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
+  BasePrice: 100000000000000
+  UpgradeScaling: 1
+  BaseEmissionInfluence: -3000000000
+  BaseBudgetInfluence: 30000000000000
+  MaxUpgradeLevel: 1
   SpecialEffectUpgrade: 0
-  RequiredUpgrades: []
+  RequiredUpgrades:
+  - RequiredUpgradeName: Nuclear Energy Subsidies
+    RequiredUpgradeLevel: 5
+  - RequiredUpgradeName: Renewable Energy Sources
+    RequiredUpgradeLevel: 5
   UpgradeSpecialEffects: []
   UpgradeExplanation: 

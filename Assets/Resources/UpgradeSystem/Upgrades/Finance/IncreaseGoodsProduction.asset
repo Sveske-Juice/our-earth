@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470a9a7069175490a455e57c14182fb, type: 3}
   m_Name: IncreaseGoodsProduction
   m_EditorClassIdentifier: 
-  UpgradeName: 
-  BasePrice: 0
+  UpgradeName: Increase Goods Production
+  BasePrice: 2000000000000
   UpgradeScaling: 1.25
-  BaseEmissionInfluence: 0
-  BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
+  BaseEmissionInfluence: 100000000
+  BaseBudgetInfluence: 6000000000000
+  MaxUpgradeLevel: 100
   SpecialEffectUpgrade: 0
   RequiredUpgrades: []
   UpgradeSpecialEffects: []

@@ -29,4 +29,8 @@ MonoBehaviour:
     m_SpecialEffect:
       m_EmissionInfluence: -30000000
       m_BudgetInfluence: 0
+  - m_UpgradeInfluenced: Increase Import & Export
+    m_SpecialEffect:
+      m_EmissionInfluence: -30000000
+      m_BudgetInfluence: 0
   UpgradeExplanation: 

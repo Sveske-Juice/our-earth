@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470a9a7069175490a455e57c14182fb, type: 3}
   m_Name: WorkFromHomeSubsidies
   m_EditorClassIdentifier: 
-  UpgradeName: 
-  BasePrice: 0
-  UpgradeScaling: 1.25
-  BaseEmissionInfluence: 0
-  BaseBudgetInfluence: 0
-  MaxUpgradeLevel: 10
-  SpecialEffectUpgrade: 0
+  UpgradeName: Work-From-Home-Subsidies
+  BasePrice: 15000000000000
+  UpgradeScaling: 1
+  BaseEmissionInfluence: -60000000
+  BaseBudgetInfluence: -10000000000000
+  MaxUpgradeLevel: 1
+  SpecialEffectUpgrade: 1
   RequiredUpgrades: []
-  UpgradeSpecialEffects: []
+  UpgradeSpecialEffects:
+  - m_UpgradeInfluenced: Increase Outsourcing
+    m_SpecialEffect:
+      m_EmissionInfluence: -60000000
+      m_BudgetInfluence: 0
   UpgradeExplanation: 
