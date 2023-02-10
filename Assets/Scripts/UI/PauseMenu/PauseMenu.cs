@@ -15,24 +15,28 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         SceneManager.LoadScene("Menu");
         Time.timeScale = 1;
     }
 
     public void PauseGame()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
     }
 
     public void ResumeGame()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
 
     public void ResetLevel()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

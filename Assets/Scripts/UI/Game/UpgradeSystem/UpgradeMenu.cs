@@ -215,6 +215,10 @@ public class UpgradeMenu : MonoBehaviour
         // Actually upgrade to next level
         upgrade.Upgrade2NextLevel();
 
+        //Play Sound
+        FindObjectOfType<AudioManager>().Play("Upgrade");
+        print("Upgrade soundy:)");
+
         // Update UI
         UpdateUpgrades();
     }
