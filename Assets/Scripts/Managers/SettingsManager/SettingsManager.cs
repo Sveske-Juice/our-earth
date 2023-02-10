@@ -7,8 +7,12 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
+    private static SettingsManager s_Instance;
     private SettingsData m_Settings;
     private string m_SavePath;
+
+    public static SettingsManager Instance => s_Instance;
+    public bool FlatEarthModel => m_Settings.FlatEarthModel;
 
     [Header("References")]
     [SerializeField]
@@ -16,6 +20,14 @@ public class SettingsManager : MonoBehaviour
 
     private void Awake()
     {
+        if (s_Instance == null)
+            s_Instance = this;
+        else
+        {
+            Destroy(this);
+            return;
+        }
+
         m_SavePath = Application.persistentDataPath + "/settings.sus";
 
         // Load settings if available
@@ -48,7 +60,10 @@ public class SettingsManager : MonoBehaviour
     {
         // If no settings found then just load defaults
         if (!File.Exists(m_SavePath))
+        {
+            Debug.Log("No settings found on disk. Will load defualt settings");
             return new SettingsData();
+        }
 
         // Load settings found
         // TODO use with file stream again here
