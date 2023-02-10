@@ -24,6 +24,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioMixerGroup m_MusicMixerGroup;
 
+    public static AudioManager Instance => s_Instance;
+
     private void Awake()
     {
         if (s_Instance == null)

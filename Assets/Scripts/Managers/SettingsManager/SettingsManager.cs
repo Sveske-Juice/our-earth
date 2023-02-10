@@ -37,6 +37,9 @@ public class SettingsManager : MonoBehaviour
     [SerializeField]
     private Slider m_SoundVolumeSlider;
 
+    [SerializeField]
+    private TMPro.TMP_Dropdown m_MusicSelectDropdown;
+
     private void Awake()
     {
         if (s_Instance == null)
@@ -58,14 +61,34 @@ public class SettingsManager : MonoBehaviour
         // Setup callbacks
         if (SceneManager.GetActiveScene().name == "Menu")
         {
+            UpdateMusicSelectOptions();
             m_ApplySettingsButton.onClick.AddListener(delegate () { SaveSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
             m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
             m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; });
             m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
             m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
+            m_MusicSelectDropdown.onValueChanged.AddListener(delegate (int option) { m_Settings.MusicSelected = option; PlayMusicSelected(); });
         }
 
         UpdateSettingValues();
+    }
+
+    private void UpdateMusicSelectOptions()
+    {
+        Sound[] musicSounds = AudioManager.Instance.musicSounds;
+
+        for (int i = 0; i < musicSounds.Length; i++)        
+        {
+            m_MusicSelectDropdown.options.Add(new TMPro.TMP_Dropdown.OptionData(musicSounds[i].name));
+        }
+
+        PlayMusicSelected();
+    }
+
+    private void PlayMusicSelected()
+    {
+        // Play default/selected sound on loop
+        AudioManager.Instance.SetMusicSound(AudioManager.Instance.musicSounds[m_Settings.MusicSelected]);
     }
 
     private void SaveSettings()
@@ -131,9 +154,10 @@ public class SettingsData
     public bool FlatEarthModel = false;
     public float MusicVolume = 1f;
     public float SoundVolume = 1f;
+    public int MusicSelected = 1;
 
     public override string ToString()
     {
-        return $"Settings Data: Flat earth: {FlatEarthModel}, Music volume: {MusicVolume}, Sound Volume: {SoundVolume}";
+        return $"Settings Data: Flat earth: {FlatEarthModel}, Music volume: {MusicVolume}, Sound Volume: {SoundVolume}, Music selected {MusicSelected}";
     }
 }

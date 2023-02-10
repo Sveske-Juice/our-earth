@@ -61,7 +61,31 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
-  musicSounds: []
+  musicSounds:
+  - name: Animal Crossing
+    soundType: 1
+    clip: {fileID: 8300000, guid: f86fd015cfa197b4cb21d0e11e08d760, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Buff
+    soundType: 1
+    clip: {fileID: 8300000, guid: af5e12bc886b52943b234df764bd8fb1, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Classical
+    soundType: 1
+    clip: {fileID: 8300000, guid: 29dd58d04e7fdb641ae7ac008969ea11, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Doom
+    soundType: 1
+    clip: {fileID: 8300000, guid: d007de649017abf40b05f2eb691dd1a5, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
   m_AudioSource: {fileID: 336759073271412199}
   m_MusicSource: {fileID: 1834379989}
   m_SoundMixerGroup: {fileID: 5392691330683562058, guid: 9038d11fb862ad29f918b167a0a0366c, type: 2}

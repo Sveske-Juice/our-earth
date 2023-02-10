@@ -55,7 +55,6 @@ public class AudioChanger : MonoBehaviour
 
     private void SetVolume(string exposedGroup, float value)
     {
-        Debug.Log($"Setting volume on {exposedGroup} to {value}");
-        Debug.Log($"Succesfull?: {m_AudioMixer.SetFloat(exposedGroup, Mathf.Log10(value) * 20)}");
+        m_AudioMixer.SetFloat(exposedGroup, Mathf.Log10(value) * 20);
     }
 }
