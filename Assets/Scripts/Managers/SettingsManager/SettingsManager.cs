@@ -32,6 +32,9 @@ public class SettingsManager : MonoBehaviour
     private Toggle m_FlatEarthToggle;
 
     [SerializeField]
+    private Toggle m_FullscreenToggle;
+
+    [SerializeField]
     private Slider m_MusicVolumeSlider;
 
     [SerializeField]
@@ -62,16 +65,23 @@ public class SettingsManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             UpdateMusicSelectOptions();
-            m_ApplySettingsButton.onClick.AddListener(delegate () { SaveSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
-            m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); FindObjectOfType<AudioManager>().Play("Button"); });
-            m_FlatEarthToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.FlatEarthModel = state; });
+            m_ApplySettingsButton.onClick.AddListener(delegate () { ApplySettings(); SaveSettings(); AudioManager.Instance.Play("Button"); });
+            m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); AudioManager.Instance.Play("Button"); });
+            m_FlatEarthToggle.onValueChanged.AddListener((bool state) => m_Settings.FlatEarthModel = state );
+            m_FullscreenToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.Fullscreen = state; });
             m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
             m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
             m_MusicSelectDropdown.onValueChanged.AddListener(delegate (int option) { m_Settings.MusicSelected = option; PlayMusicSelected(); });
         }
         
+        Screen.fullScreen = m_Settings.Fullscreen;
         PlayMusicSelected();
         UpdateSettingValues();
+    }
+
+    private void ApplySettings()
+    {
+        Screen.fullScreen = m_Settings.Fullscreen;
     }
 
     private void UpdateMusicSelectOptions()
@@ -130,6 +140,7 @@ public class SettingsManager : MonoBehaviour
             return;
         
         m_FlatEarthToggle.isOn = m_Settings.FlatEarthModel;
+        m_FullscreenToggle.isOn = m_Settings.Fullscreen;
         m_MusicVolumeSlider.value = m_Settings.MusicVolume;
         m_SoundVolumeSlider.value = m_Settings.SoundVolume;
         m_MusicSelectDropdown.value = m_Settings.MusicSelected;
@@ -153,12 +164,13 @@ public class SettingsManager : MonoBehaviour
 public class SettingsData
 {
     public bool FlatEarthModel = false;
+    public bool Fullscreen = true;
     public float MusicVolume = 1f;
     public float SoundVolume = 1f;
     public int MusicSelected = 1;
 
     public override string ToString()
     {
-        return $"Settings Data: Flat earth: {FlatEarthModel}, Music volume: {MusicVolume}, Sound Volume: {SoundVolume}, Music selected {MusicSelected}";
+        return $"Settings Data: Flat earth: {FlatEarthModel}, Music volume: {MusicVolume}, Sound Volume: {SoundVolume}, Music selected {MusicSelected}, Fullscreen: {Fullscreen}";
     }
 }
