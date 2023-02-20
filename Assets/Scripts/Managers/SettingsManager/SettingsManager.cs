@@ -58,7 +58,7 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        // Setup callbacks
+        // Setup callbacks for UI
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             UpdateMusicSelectOptions();
@@ -69,7 +69,8 @@ public class SettingsManager : MonoBehaviour
             m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
             m_MusicSelectDropdown.onValueChanged.AddListener(delegate (int option) { m_Settings.MusicSelected = option; PlayMusicSelected(); });
         }
-
+        
+        PlayMusicSelected();
         UpdateSettingValues();
     }
 
@@ -81,8 +82,6 @@ public class SettingsManager : MonoBehaviour
         {
             m_MusicSelectDropdown.options.Add(new TMPro.TMP_Dropdown.OptionData(musicSounds[i].name));
         }
-
-        PlayMusicSelected();
     }
 
     private void PlayMusicSelected()
@@ -133,6 +132,8 @@ public class SettingsManager : MonoBehaviour
         m_FlatEarthToggle.isOn = m_Settings.FlatEarthModel;
         m_MusicVolumeSlider.value = m_Settings.MusicVolume;
         m_SoundVolumeSlider.value = m_Settings.SoundVolume;
+        m_MusicSelectDropdown.value = m_Settings.MusicSelected;
+        m_MusicSelectDropdown.RefreshShownValue();
     }
 
     private void ResetSettings()

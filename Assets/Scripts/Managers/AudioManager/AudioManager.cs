@@ -73,5 +73,6 @@ public class AudioManager : MonoBehaviour
         music.source.clip = music.clip;
         music.source.outputAudioMixerGroup = m_MusicMixerGroup;
         music.source.loop = true;
+        music.source.Play();
     }
 }
