@@ -15,7 +15,7 @@ public class CatastropheManager : MonoBehaviour
     [SerializeField, Tooltip("How much catastrophes are accelerated (multiplied) when pollution is at its maximum.")]
     private float m_TimeMultiplierWhenMaxPollution = 4f;
 
-    [SerializeField, Tooltip("")]
+    private float m_TimeSinceCatestrophe = 0f;
 
     /// <summary> Event that gets raised when a catastrophe starts. </summary>
     public static event Action<Catastrophe, Upgrade> OnCatastropheStart;
@@ -24,32 +24,43 @@ public class CatastropheManager : MonoBehaviour
 
     private void OnEnable()
     {
-        CatastropheWariningDisplay.OnCatastropheAvoided += ChooseNextCatastrophe;
-        CatastropheWariningDisplay.OnCatastropheIgnored += ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheAvoided += TickCatastropheTimer;
+        CatastropheWariningDisplay.OnCatastropheIgnored += TickCatastropheTimer;
     }
 
     private void OnDisable()
     {
-        CatastropheWariningDisplay.OnCatastropheAvoided -= ChooseNextCatastrophe;
-        CatastropheWariningDisplay.OnCatastropheIgnored -= ChooseNextCatastrophe;
+        CatastropheWariningDisplay.OnCatastropheAvoided -= TickCatastropheTimer;
+        CatastropheWariningDisplay.OnCatastropheIgnored -= TickCatastropheTimer;
     }
 
     private void Start()
     {
-        ChooseNextCatastrophe();
+        TickCatastropheTimer();
     }
 
-    private void ChooseNextCatastrophe()
+    private void TickCatastropheTimer() { StartCoroutine(IETickCatastropheTimer()); }
+
+    private IEnumerator IETickCatastropheTimer()
     {
-        // Get random time for the catastrophe to happen
-        float timeForCatastrophe = UnityEngine.Random.Range(m_MinTimeForCatastrophe, m_MaxTimeForCatastrophe);
+        do {
+            // Calculate time multiplier based on emissions
+            float pollution = Mathf.Clamp((float) PollutionManager.EmissionsPrYear, (float) PollutionManager.GoodPollutionThreshold, (float) PollutionManager.BadPollutionThreshold);
+            float pollutionPercent = (pollution - (float) PollutionManager.GoodPollutionThreshold)/((float) (PollutionManager.BadPollutionThreshold - PollutionManager.GoodPollutionThreshold));
+            float timeMultiplier = 1 + m_TimeMultiplierWhenMaxPollution * pollutionPercent;
+            // Tick catastrophe timer
+            m_TimeSinceCatestrophe += Time.deltaTime * timeMultiplier;
+            yield return new WaitForEndOfFrame();
+        } while (m_TimeSinceCatestrophe < m_MinTimeForCatastrophe);
+        
 
         // Get random catastrophe that will happen
         int randomIdx = m_Random.Next(m_Catastrophes.Count);
         Catastrophe randomCatastrophe = m_Catastrophes[randomIdx];
 
-        // Start countdown of the catastrophe
-        StartCoroutine(StartCountdownForCatastrophe(timeForCatastrophe, randomCatastrophe));
+        // Start countdown between min and max wait time
+        StartCoroutine(StartCountdownForCatastrophe(UnityEngine.Random.Range(0f, m_MaxTimeForCatastrophe - m_TimeSinceCatestrophe), randomCatastrophe));
+        m_TimeSinceCatestrophe = 0f;
     }
 
     private IEnumerator StartCountdownForCatastrophe(float delay, Catastrophe catastrophe)
@@ -64,9 +75,12 @@ public class CatastropheManager : MonoBehaviour
     private void PerformCatastrophe(Catastrophe catastrophe)
     {
         Upgrade upgrade = GetRandomUpgrade();
+        
+        // If no upgrades could be retrieved (maybe no upgrades are higher level than 0)
+        // then just try again
         if (upgrade == null)
         {
-            ChooseNextCatastrophe();
+            TickCatastropheTimer();
             return;
         }
 

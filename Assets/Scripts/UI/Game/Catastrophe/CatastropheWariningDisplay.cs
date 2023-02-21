@@ -15,9 +15,6 @@ public class CatastropheWariningDisplay : MonoBehaviour
     [SerializeField, Tooltip("How long the warning will be shown in the middle of the screen.")]
     private float m_MiddleScreenTime = 2.5f;
 
-    [SerializeField, Tooltip("How long the warning will be shown in the corner of the screen.")]
-    private float m_CornerScreenTime = 7.5f;
-
     [SerializeField, Tooltip("Amount to be paid to avoid catastrophe")]
     private double m_AvoidCatastropheCost = NumberPrefixer.Parse("5T");
 
@@ -136,6 +133,7 @@ public class CatastropheWariningDisplay : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         upgrade.Downgrade();
+        OnCatastropheIgnored?.Invoke();
         Reset();
     }
 
@@ -146,7 +144,8 @@ public class CatastropheWariningDisplay : MonoBehaviour
             return;
 
         EconomyManager.Instance.RegisterPurchase(m_AvoidCatastropheCost);
-        FindObjectOfType<AudioManager>().Play("Upgrade");
+        AudioManager.Instance.Play("Upgrade");
+        OnCatastropheAvoided?.Invoke();
 
         // Stop downgrade from happening
         StopAllCoroutines();
