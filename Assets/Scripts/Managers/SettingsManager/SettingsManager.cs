@@ -18,6 +18,7 @@ public class SettingsManager : MonoBehaviour
     public float MusicVolume => m_Settings.MusicVolume;
     public float SoundVolume => m_Settings.SoundVolume;
 
+    /// <summary> Event that gets raised when the settings have been changed and applied. Will also be called in the start of the game. </summary>
     public static event Action OnSettingsChanged;
 
 
@@ -62,26 +63,30 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         // Setup callbacks for UI
-        if (SceneManager.GetActiveScene().name == "Menu")
-        {
-            UpdateMusicSelectOptions();
-            m_ApplySettingsButton.onClick.AddListener(delegate () { ApplySettings(); SaveSettings(); AudioManager.Instance.Play("Button"); });
-            m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); AudioManager.Instance.Play("Button"); });
-            m_FlatEarthToggle.onValueChanged.AddListener((bool state) => m_Settings.FlatEarthModel = state );
-            m_FullscreenToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.Fullscreen = state; });
-            m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
-            m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
-            m_MusicSelectDropdown.onValueChanged.AddListener(delegate (int option) { m_Settings.MusicSelected = option; PlayMusicSelected(); });
-        }
+        UpdateMusicSelectOptions();
+        m_ApplySettingsButton.onClick.AddListener(delegate () { ApplySettings(); SaveSettings(); AudioManager.Instance.Play("Button"); });
+        m_ResetSettingsButton.onClick.AddListener(delegate () { ResetSettings(); AudioManager.Instance.Play("Button"); });
+        m_FlatEarthToggle.onValueChanged.AddListener((bool state) => m_Settings.FlatEarthModel = state );
+        m_FullscreenToggle.onValueChanged.AddListener(delegate (bool state) { m_Settings.Fullscreen = state; });
+        m_MusicVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.MusicVolume = value; });
+        m_SoundVolumeSlider.onValueChanged.AddListener(delegate (float value) { m_Settings.SoundVolume = value; });
+        m_MusicSelectDropdown.onValueChanged.AddListener(delegate (int option) { m_Settings.MusicSelected = option; });
         
-        Screen.fullScreen = m_Settings.Fullscreen;
-        PlayMusicSelected();
+        ApplySettings();
         UpdateSettingValues();
     }
 
+    /// <summary>
+    /// Applies the settings set in m_Settings to the current game instance.
+    /// </summary>
     private void ApplySettings()
     {
         Screen.fullScreen = m_Settings.Fullscreen;
+
+        // Play default/selected sound on loop
+        AudioManager.Instance.SetMusicSound(AudioManager.Instance.musicSounds[m_Settings.MusicSelected]);
+
+        OnSettingsChanged?.Invoke();
     }
 
     private void UpdateMusicSelectOptions()
@@ -94,12 +99,9 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    private void PlayMusicSelected()
-    {
-        // Play default/selected sound on loop
-        AudioManager.Instance.SetMusicSound(AudioManager.Instance.musicSounds[m_Settings.MusicSelected]);
-    }
-
+    /// <summary>
+    /// Saves the currently applied settings to disk.
+    /// </summary>
     private void SaveSettings()
     {
         // TODO make generic and use with file stream thing
@@ -109,11 +111,13 @@ public class SettingsManager : MonoBehaviour
         formatter.Serialize(stream, m_Settings);
         stream.Close();
 
-        OnSettingsChanged?.Invoke();
         print($"Saved settings: {m_Settings.ToString()}");
     }
 
-    // If settings are available then load. If not then create default settings
+    /// <summary>
+    /// Load the settings from disk. 
+    /// If the settings are not available then create default settings.
+    /// </summary>
     private SettingsData LoadSettings()
     {
         // If no settings found then just load defaults
@@ -133,12 +137,13 @@ public class SettingsManager : MonoBehaviour
         return data;
     }
 
+    /// <summary>
+    /// Updates the UI element in the settings menu, 
+    /// to display the currently applied settings.
+    /// </summary>
     private void UpdateSettingValues()
     {
-        // Set default values
-        if (SceneManager.GetActiveScene().name != "Menu")
-            return;
-        
+        // Set default values      
         m_FlatEarthToggle.isOn = m_Settings.FlatEarthModel;
         m_FullscreenToggle.isOn = m_Settings.Fullscreen;
         m_MusicVolumeSlider.value = m_Settings.MusicVolume;

@@ -8,15 +8,32 @@ public class SpinGlobe : MonoBehaviour
     public float zoomSpeed;
     public float rotationSpeed = 1000;
     bool dragging = false;
+    Vector3 normalSize = new Vector3(11f, 11f, 11f);
     Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
 
+    private void OnEnable()
+    {
+        SettingsManager.OnSettingsChanged += SelectFlatEarth;
+    }
+
+    private void OnDisable()
+    {
+        SettingsManager.OnSettingsChanged -= SelectFlatEarth;
+    }
+
+    private void SelectFlatEarth()
+    {
         // If the earth should be flat earth then make flat
         if (SettingsManager.Instance.FlatEarthModel)
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1f);
+        else
+            transform.localScale = normalSize;
+
     }
 
     private void OnMouseDrag()
