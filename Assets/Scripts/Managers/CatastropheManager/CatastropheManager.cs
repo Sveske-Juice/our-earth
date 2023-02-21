@@ -50,10 +50,11 @@ public class CatastropheManager : MonoBehaviour
             float timeMultiplier = 1 + m_TimeMultiplierWhenMaxPollution * pollutionPercent;
             // Tick catastrophe timer
             m_TimeSinceCatestrophe += Time.deltaTime * timeMultiplier;
+            // print($"cat time: {m_TimeSinceCatestrophe}, mult: {timeMultiplier}");
             yield return new WaitForEndOfFrame();
         } while (m_TimeSinceCatestrophe < m_MinTimeForCatastrophe);
         
-
+        
         // Get random catastrophe that will happen
         int randomIdx = m_Random.Next(m_Catastrophes.Count);
         Catastrophe randomCatastrophe = m_Catastrophes[randomIdx];
@@ -65,6 +66,7 @@ public class CatastropheManager : MonoBehaviour
 
     private IEnumerator StartCountdownForCatastrophe(float delay, Catastrophe catastrophe)
     {
+        // !FIXME should probably also be scaled by timeMultiplier
         yield return new WaitForSecondsRealtime(delay);
         PerformCatastrophe(catastrophe);
     }
