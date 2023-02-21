@@ -38,6 +38,7 @@ public class PollutionManager : MonoBehaviour
 
         // Update emissions pr year when initializing
         UpdateEmission();
+        OnYearlyEmissionChange?.Invoke(m_EmissionPrYear);
     }
 
     private void OnEnable()

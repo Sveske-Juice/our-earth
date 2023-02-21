@@ -17,7 +17,7 @@ MonoBehaviour:
   UpgradeScaling: 1.25
   BaseEmissionInfluence: 150000000
   BaseBudgetInfluence: 8000000000000
-  MaxUpgradeLevel: 100
+  MaxUpgradeLevel: 500
   SpecialEffectUpgrade: 0
   RequiredUpgrades: []
   UpgradeSpecialEffects: []
