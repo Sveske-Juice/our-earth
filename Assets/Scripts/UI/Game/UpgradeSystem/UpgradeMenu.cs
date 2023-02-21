@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
@@ -27,8 +26,7 @@ public class UpgradeMenu : MonoBehaviour
 
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
-    private UpgradeCategory m_LastClickedCategory;
-
+    private static UpgradeCategory s_LastClickedCategory;
 
     private void Awake()
     {
@@ -70,6 +68,10 @@ public class UpgradeMenu : MonoBehaviour
             Debug.LogError($"Continent ({continent.name}) does not have a upgrade system attached which is required.");
             return;
         }
+
+        // If its the first time a contintent is clicked then default the last clicked category to the first
+        if (s_LastClickedCategory == null)
+            s_LastClickedCategory = clickedContinentSystem.UpgradeCategories[0];
 
         // Clear the menu from old data
         ClearMenu();
@@ -116,6 +118,9 @@ public class UpgradeMenu : MonoBehaviour
 
         // Create upgrade categories assigned to this upgrade system.
         CreateCategoriesBody(upgradeSystem);
+
+        // Select previous selected upgrade category by default
+        CreateUpgradesBody(s_LastClickedCategory);
     }
 
     /// <summary>
@@ -141,7 +146,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (upgradeCategory == null)
             return;
-        
+
         List<Upgrade> upgrades = upgradeCategory.Upgrades;
 
         for (int i = 0; i < upgrades.Count; i++)
@@ -205,7 +210,7 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
-        m_LastClickedCategory = categoryClicked;
+        s_LastClickedCategory = categoryClicked;
 
         //Play Sound
         FindObjectOfType<AudioManager>().Play("Button");
@@ -231,6 +236,6 @@ public class UpgradeMenu : MonoBehaviour
     private void UpdateUpgrades()
     {
         ClearUpgrades();
-        CreateUpgradesBody(m_LastClickedCategory);
+        CreateUpgradesBody(s_LastClickedCategory);
     }
 }
