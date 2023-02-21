@@ -5,17 +5,11 @@ using UnityEngine;
 public class BackgroundPollutionDarkener : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField, Tooltip("The pollution level that corresponds to maximum. The color will be the darkest if the pollution level reaches this value.")]
-    private float m_MaxPollutionThreshold = (float) NumberPrefixer.Parse("30B");
+    [SerializeField, Tooltip("The brightness used when emissions is at a good level.")]
+    private float m_Goodbrightness = 0.95f;
 
-    [SerializeField, Tooltip("The pollution level that corresponds to minimum. The color will be the lightest if the pollution level reaches this value.")]
-    private float m_MinPollutionThreshold = (float) NumberPrefixer.Parse("5B");
-
-    [SerializeField, Tooltip("The Value (from HSV) used when minimum pollution is reached.")]
-    private float m_MaxHSVValue = 1f;
-
-    [SerializeField, Tooltip("The Value (from HSV) used when maximum pollution is reached.")]
-    private float m_MinHSVValue = 0.1f;
+    [SerializeField, Tooltip("The brightness used when emissions is at a very bad level.")]
+    private float m_BadBrightness = 0.1f;
 
     private Camera m_Camera;
 
@@ -36,18 +30,19 @@ public class BackgroundPollutionDarkener : MonoBehaviour
 
     /// <summary>
     /// Will update the games background color based on the yearly emissions.
-    /// More pollution will darken the background more.
+    /// More pollution will darken the background more. (Linearly interpolating between bad and good levels)
     /// </summary>
     private void UpdateBackgroundColor(double emissions)
     {
-        float pollution = Mathf.Clamp((float) emissions, 0f, (float) m_MaxPollutionThreshold);
+        // Clamp pollution between good and bad levels
+        float pollution = Mathf.Clamp((float) emissions, (float) PollutionManager.GoodPollutionThreshold, (float) PollutionManager.BadPollutionThreshold);
 
-        // Percentage of how much the dark color should be viewed. If pollution is on max the percentage is 100%
-        float pollutionPercentage = pollution / m_MaxPollutionThreshold;
-        print($"Pollution Percentage: {pollutionPercentage}");
-        // Find HSB brightness for pollution percentage
-        float brightness = 1 - (m_MaxHSVValue - m_MinHSVValue) * pollutionPercentage;
-        brightness = Mathf.Clamp(brightness, m_MinHSVValue, m_MaxHSVValue);
+        // Get percentage of pollution in the range [PollutionManager.GoodPollutionThreshold;PollutionManager.BadPollutionThreshold]
+        // see: https://math.stackexchange.com/questions/51509/how-to-calculate-percentage-of-value-inside-arbitrary-range
+        float pollutionPercent = (pollution - (float) PollutionManager.GoodPollutionThreshold)/((float) (PollutionManager.BadPollutionThreshold - PollutionManager.GoodPollutionThreshold));
+
+        // Calculate brightness value based on percentage
+        float brightness = m_Goodbrightness + (m_BadBrightness - m_Goodbrightness) * pollutionPercent;
 
         // Set value
         float h;

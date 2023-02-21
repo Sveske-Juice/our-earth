@@ -5,6 +5,12 @@ using System;
 
 public class PollutionManager : MonoBehaviour
 {
+    /// <summary> The pollution level that corresponds to being very bad. </summary>
+    public static double BadPollutionThreshold = NumberPrefixer.Parse("30B");
+
+    /// <summary> The pollution level that corresponds to being good. </summary>
+    public static double GoodPollutionThreshold = NumberPrefixer.Parse("5B");
+
     private static PollutionManager s_Instance;
     private PollutionData m_PollutionData;
 

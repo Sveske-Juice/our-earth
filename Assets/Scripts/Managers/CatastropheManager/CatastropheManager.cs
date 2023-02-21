@@ -6,8 +6,16 @@ using System;
 public class CatastropheManager : MonoBehaviour
 {
     [Header("Catastrophe Settings")]
-    [SerializeField, Tooltip("Minimum time before a catastrophe can happen")] private float m_MinTimeForCatastrophe = 30f;
-    [SerializeField, Tooltip("Its guranteed that a catastrophe will happen before this time")] private float m_MaxTimeForCatastrophe = 60f;
+    [SerializeField, Tooltip("Minimum time before a catastrophe can happen")]
+    private float m_MinTimeForCatastrophe = 30f;
+
+    [SerializeField, Tooltip("Its guranteed that a catastrophe will happen before this time")]
+    private float m_MaxTimeForCatastrophe = 60f;
+
+    [SerializeField, Tooltip("How much catastrophes are accelerated (multiplied) when pollution is at its maximum.")]
+    private float m_TimeMultiplierWhenMaxPollution = 4f;
+
+    [SerializeField, Tooltip("")]
 
     /// <summary> Event that gets raised when a catastrophe starts. </summary>
     public static event Action<Catastrophe, Upgrade> OnCatastropheStart;
