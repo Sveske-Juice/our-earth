@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 [RequireComponent(typeof(PopoutAnim))]
 public class UpgradeMenu : MonoBehaviour
@@ -26,7 +27,7 @@ public class UpgradeMenu : MonoBehaviour
 
     private PopoutAnim m_PopoutAnimator;
     private ContinentUpgradeSystem m_LastClickedContinentSystem;
-    private static UpgradeCategory s_LastClickedCategory;
+    private static string s_DefaultCategoryName2Display;
 
     private void Awake()
     {
@@ -70,8 +71,8 @@ public class UpgradeMenu : MonoBehaviour
         }
 
         // If its the first time a contintent is clicked then default the last clicked category to the first
-        if (s_LastClickedCategory == null)
-            s_LastClickedCategory = clickedContinentSystem.UpgradeCategories[0];
+        if (s_DefaultCategoryName2Display == null)
+            s_DefaultCategoryName2Display = clickedContinentSystem.UpgradeCategories[0].CategoryName;
 
         // Clear the menu from old data
         ClearMenu();
@@ -120,7 +121,18 @@ public class UpgradeMenu : MonoBehaviour
         CreateCategoriesBody(upgradeSystem);
 
         // Select previous selected upgrade category by default
-        CreateUpgradesBody(s_LastClickedCategory);
+        CreateUpgradesBody(FindCategoryFromName(upgradeSystem, s_DefaultCategoryName2Display));
+    }
+
+    /// <summary> Returns the upgrade category object on an upgrade system, with the matching category name. Otherwise null is returned. </summary>
+    private UpgradeCategory FindCategoryFromName(ContinentUpgradeSystem upgradeSystem, string categoryName)
+    {
+        for (int i = 0; i < upgradeSystem.UpgradeCategories.Count; i++)
+        {
+            if (upgradeSystem.UpgradeCategories[i].CategoryName == categoryName)
+                return upgradeSystem.UpgradeCategories[i];
+        }
+        return null;
     }
 
     /// <summary>
@@ -210,10 +222,10 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnCategoryButtonClick(UpgradeCategory categoryClicked)
     {
-        s_LastClickedCategory = categoryClicked;
+        s_DefaultCategoryName2Display = categoryClicked.CategoryName;
 
         //Play Sound
-        FindObjectOfType<AudioManager>().Play("Button");
+        AudioManager.Instance.Play("Button");
 
         UpdateUpgrades();
     }
@@ -224,7 +236,7 @@ public class UpgradeMenu : MonoBehaviour
         upgrade.Upgrade2NextLevel();
 
         //Play Sound
-        FindObjectOfType<AudioManager>().Play("Upgrade");
+        AudioManager.Instance.Play("Upgrade");
 
         // Update UI
         UpdateUpgrades();
@@ -236,6 +248,10 @@ public class UpgradeMenu : MonoBehaviour
     private void UpdateUpgrades()
     {
         ClearUpgrades();
-        CreateUpgradesBody(s_LastClickedCategory);
+
+        if (m_LastClickedContinentSystem == null || s_DefaultCategoryName2Display == null)
+            return;
+        
+        CreateUpgradesBody(FindCategoryFromName(m_LastClickedContinentSystem, s_DefaultCategoryName2Display));
     }
 }
