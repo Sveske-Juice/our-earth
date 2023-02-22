@@ -84,6 +84,7 @@ public class SettingsManager : MonoBehaviour
         Screen.fullScreen = m_Settings.Fullscreen;
 
         // Play default/selected sound on loop
+        m_Settings.MusicSelected = Math.Clamp(m_Settings.MusicSelected, 0, AudioManager.Instance.musicSounds.Length - 1); // Music might have been deleted/added since last save, so make sure its a valid soundtrack
         AudioManager.Instance.SetMusicSound(AudioManager.Instance.musicSounds[m_Settings.MusicSelected]);
 
         OnSettingsChanged?.Invoke();

@@ -62,27 +62,9 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
   musicSounds:
-  - name: Animal Crossing
+  - name: gamejam_menu
     soundType: 1
-    clip: {fileID: 8300000, guid: f86fd015cfa197b4cb21d0e11e08d760, type: 3}
-    volume: 1
-    pitch: 1
-    source: {fileID: 0}
-  - name: Buff
-    soundType: 1
-    clip: {fileID: 8300000, guid: af5e12bc886b52943b234df764bd8fb1, type: 3}
-    volume: 1
-    pitch: 1
-    source: {fileID: 0}
-  - name: Classical
-    soundType: 1
-    clip: {fileID: 8300000, guid: 29dd58d04e7fdb641ae7ac008969ea11, type: 3}
-    volume: 1
-    pitch: 1
-    source: {fileID: 0}
-  - name: Doom
-    soundType: 1
-    clip: {fileID: 8300000, guid: d007de649017abf40b05f2eb691dd1a5, type: 3}
+    clip: {fileID: 8300000, guid: 982e88ff80b29839a99c96e3d9bf6d6b, type: 3}
     volume: 1
     pitch: 1
     source: {fileID: 0}
