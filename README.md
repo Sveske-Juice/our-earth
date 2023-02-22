@@ -1,6 +1,9 @@
 ## General game idea
 This is a small management game for a school project. 
-The general goal of the game is to reach zero emissions by some year. The user needs to invest money on different upgrades that influence a continent's yearly income and emissions.
+The general goal of the game is to reach zero emissions by some year. The user needs to invest money on different upgrades that influence a continent's yearly income and 
+emissions.
+
+#### See our itch.io page for downloads and more: https://sveske-juice.itch.io/our-earth
 
 ## What does this repo contain?
 This repository contains the Unity project files for the game. This includes things like scripts, 3D-models, music etc. One can clone the repository and open the project with unity. Unity Editor version `2021.3.11f1` was used for this project.
