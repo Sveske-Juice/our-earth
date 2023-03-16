@@ -170,7 +170,7 @@ public class SettingsManager : MonoBehaviour
 public class SettingsData
 {
     public bool FlatEarthModel = false;
-    public bool Fullscreen = true;
+    public bool Fullscreen = false;
     public float MusicVolume = 1f;
     public float SoundVolume = 1f;
     public int MusicSelected = 1;
