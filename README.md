@@ -11,6 +11,9 @@ This repository contains the Unity project files for the game. This includes thi
 ## Credits
 * Thanks to [Konstantin_Keller](https://sketchfab.com/Konstantin_Keller) for making the earth 3D-model. The model is licensed under [CC Attribution](https://creativecommons.org/licenses/by/4.0/) and can be found [here](https://sketchfab.com/3d-models/low-poly-earth-c99483d5e2a94ca8b4f3579145584beb#download)
 
+## Licensing
+All the code is licensed under GNU GPLv3 and can be freely used. All music is not to be distributed.
+
 ### Quick notes about things that can be improved, refactored and or optimized in the future:
 * Upgrade system
 * Use sub-class for upgrades with special effect
